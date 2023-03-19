@@ -1,11 +1,17 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import { IOrder, IOrderReducer } from '@/interface/order';
+import { IOrderReducer } from '@/interface/order';
 import { getOrderList } from '@/api/order';
-import { TODAY } from '@/constants/order';
+import { filterByToday } from '@/lib/utils/filterHelper';
 
-export const getOrders = createAsyncThunk<IOrder[]>(
+export const getOrders = createAsyncThunk(
   'order/getOrderList',
-  getOrderList,
+  async (param: { field: 'today' | 'total' }) => {
+    const response = await getOrderList();
+    if (param.field === 'today') {
+      return filterByToday(response);
+    }
+    return response;
+  },
 );
 
 const initialState: IOrderReducer = {
@@ -16,14 +22,7 @@ const initialState: IOrderReducer = {
 const orderSlice = createSlice({
   name: 'orders',
   initialState,
-  reducers: {
-    filterByToday: (state) => {
-      const filtered = state.orderList.filter(
-        (order) => order.transaction_time.split(' ')[0] === TODAY,
-      );
-      return { ...state, orderList: filtered };
-    },
-  },
+  reducers: {},
   extraReducers: (builder) => {
     builder.addCase(getOrders.pending, (state) => {
       state.isLoading = true;
@@ -40,7 +39,5 @@ const orderSlice = createSlice({
     });
   },
 });
-
-export const { filterByToday } = orderSlice.actions;
 
 export default orderSlice.reducer;

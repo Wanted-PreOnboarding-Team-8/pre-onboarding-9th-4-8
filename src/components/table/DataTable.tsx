@@ -9,7 +9,7 @@ type Props<T> = {
 
 const DataTable = <T extends object>({ data, columnData }: Props<T>) => {
   return (
-    <TableContainer>
+    <TableContainer h="500" overflowY={'scroll'}>
       <Table variant="simple" size={'sm'}>
         <Thead>
           <Tr>

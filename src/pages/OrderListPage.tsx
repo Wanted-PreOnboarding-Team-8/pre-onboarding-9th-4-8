@@ -1,12 +1,12 @@
 import { useEffect, useState } from 'react';
-import { Badge, Grid, Heading } from '@chakra-ui/react';
+import { Badge, Heading, VStack } from '@chakra-ui/react';
 import { IOrder } from '@/interface/order';
 import DataTable from '@/components/table/DataTable';
 import { IColumnData } from '@/interface/table';
 import Pagination from '@/components/pagination/Pagination';
 import { getSliceIndexes } from '@/lib/utils/pageHelper';
 import DataFilter from '@/components/filter/DataFilter';
-import { filterByToday, getOrders } from '@/store/slices/orderSlice';
+import { getOrders } from '@/store/slices/orderSlice';
 import useFilterParams from '@/lib/hooks/useFilterParams';
 import { DELAY } from '@/constants/order';
 import { useAppDispatch, useAppSelector } from '../store/index';
@@ -35,15 +35,24 @@ const OrderListPage = () => {
 
   useEffect(() => {
     const requestOrders = () => {
-      dispatch(getOrders()).then(() => {
-        if (fieldParam === 'today') dispatch(filterByToday());
-      });
+      console.log(fieldParam);
+      dispatch(
+        getOrders({
+          field: fieldParam ? (fieldParam as 'today' | 'total') : 'today',
+        }),
+      );
     };
+    let timer: any;
     const updateOrders = () => {
       requestOrders();
-      setTimeout(updateOrders, DELAY);
+      timer = setTimeout(updateOrders, DELAY);
     };
     updateOrders();
+    requestOrders();
+
+    return () => {
+      clearTimeout(timer);
+    };
   }, [fieldParam, dispatch]);
 
   const columnData: IColumnData<IOrder>[] = [
@@ -65,14 +74,14 @@ const OrderListPage = () => {
   if (error) return <>Error!!</>;
 
   return (
-    <Grid>
+    <VStack>
       <Heading as="h2" size="lg">
         당일 거래 내역
       </Heading>
       <DataFilter />
       <DataTable data={orderList.slice(start, end)} columnData={columnData} />
       {total && <Pagination total={total} page={page} setPage={setPage} />}
-    </Grid>
+    </VStack>
   );
 };
 
