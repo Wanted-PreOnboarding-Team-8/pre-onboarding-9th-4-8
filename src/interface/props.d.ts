@@ -4,3 +4,7 @@ export interface PagingProps {
   itemsCountPerPage: number;
   handlePageChange: (pageNumber: number) => void;
 }
+
+interface IOrderProps {
+  orderData: IOrderData[];
+}

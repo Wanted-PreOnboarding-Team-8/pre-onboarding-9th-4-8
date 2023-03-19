@@ -3,6 +3,7 @@ import { fetchOrderData } from '@/api/order';
 import Paging from '@/components/Paging';
 import { IOrderData } from '@/interface/orderData';
 import useFetch from '@/lib/hooks/useFetch';
+import OrderTable from '@/components/OrdarTable';
 
 const Admin = () => {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -22,12 +23,7 @@ const Admin = () => {
 
   return (
     <>
-      <ul>
-        {payload &&
-          payload.map((item) => {
-            return <li key={item.id}>{item.id}</li>;
-          })}
-      </ul>
+      <OrderTable orderData={payload} />
       <Paging
         page={page}
         totalItemsCount={total}
