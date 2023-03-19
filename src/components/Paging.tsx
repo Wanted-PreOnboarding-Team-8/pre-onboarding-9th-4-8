@@ -1,5 +1,6 @@
 import Pagination from 'react-js-pagination';
 import { PagingProps } from '@/interface/props';
+import '@/style/pagination.css';
 
 const Paging = ({
   page,
