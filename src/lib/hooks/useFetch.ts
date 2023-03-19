@@ -1,15 +1,15 @@
 import { useEffect, useState } from 'react';
 
-type FetchDataFunc<T> = () => Promise<{ data: T[] }>;
+type FetchDataFuncType<T> = (startIndex: number) => Promise<{ data: T[] }>;
 
-const useFetch = <T>(fetchData: FetchDataFunc<T>) => {
+const useFetch = <T>(fetchData: FetchDataFuncType<T>, startIndex: number) => {
   const [payload, setPayload] = useState<T[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [isError, setIsError] = useState(false);
 
   useEffect(() => {
     setIsLoading(true);
-    fetchData()
+    fetchData(startIndex)
       .then((response) => {
         setPayload(response.data);
       })
@@ -19,9 +19,9 @@ const useFetch = <T>(fetchData: FetchDataFunc<T>) => {
       .finally(() => {
         setIsLoading(false);
       });
-  }, [fetchData]);
+  }, [fetchData, startIndex]);
 
-  return [payload, isLoading, isError];
+  return [payload, isLoading, isError] as const;
 };
 
 export default useFetch;
