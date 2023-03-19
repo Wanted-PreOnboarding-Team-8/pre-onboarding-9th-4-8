@@ -26,11 +26,11 @@ const DataTable = <T extends object>({ data, columnData }: Props<T>) => {
           </Tr>
         </Thead>
         <Tbody>
-          {data.map((order, ri) => (
+          {data.map((d, ri) => (
             <Tr key={`table-row-${ri}`}>
-              {columnData.map((d, ci) => (
+              {columnData.map((column, ci) => (
                 <Td key={`table-data-${ri}-${ci}`}>
-                  <>{d.data(order)}</>
+                  <>{column.data(d)}</>
                 </Td>
               ))}
             </Tr>
