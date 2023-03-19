@@ -8,6 +8,7 @@ import { getSliceIndexes } from '@/lib/utils/pageHelper';
 import DataFilter from '@/components/filter/DataFilter';
 import { filterByToday, getOrders } from '@/store/slices/orderSlice';
 import useFilterParams from '@/lib/hooks/useFilterParams';
+import { DELAY } from '@/constants/order';
 import { useAppDispatch, useAppSelector } from '../store/index';
 
 const OrderListPage = () => {
@@ -33,9 +34,16 @@ const OrderListPage = () => {
   }, [page, amendParams]);
 
   useEffect(() => {
-    dispatch(getOrders()).then(() => {
-      if (fieldParam === 'today') dispatch(filterByToday());
-    });
+    const requestOrders = () => {
+      dispatch(getOrders()).then(() => {
+        if (fieldParam === 'today') dispatch(filterByToday());
+      });
+    };
+    const updateOrders = () => {
+      requestOrders();
+      setTimeout(updateOrders, DELAY);
+    };
+    updateOrders();
   }, [fieldParam, dispatch]);
 
   const columnData: IColumnData<IOrder>[] = [
