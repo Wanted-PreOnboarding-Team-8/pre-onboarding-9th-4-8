@@ -6,3 +6,9 @@ export interface IOrder {
   customer_name: string;
   currency: string;
 }
+
+export interface IOrderReducer {
+  isLoading: boolean;
+  error: string | null;
+  orderList: IOrder[];
+}
