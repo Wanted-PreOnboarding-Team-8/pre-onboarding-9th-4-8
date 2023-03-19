@@ -8,14 +8,16 @@ import OrderTable from '@/components/OrdarTable';
 const Admin = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   const page = parseInt(searchParams.get('page') || '1', 10);
+  const date = searchParams.get('date') || 'all';
 
   const [payload, total, isLoading, isError] = useFetch<IOrderData>(
     fetchOrderData,
     (page - 1) * 50,
+    date,
   );
 
   const handlePageChange = (pageNumber: number) => {
-    setSearchParams({ page: String(pageNumber) });
+    setSearchParams({ date: date, page: String(pageNumber) });
   };
 
   if (isLoading) return <div>Loading...</div>;
