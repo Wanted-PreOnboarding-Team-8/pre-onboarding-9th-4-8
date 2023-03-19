@@ -8,11 +8,10 @@ const Admin = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   const page = parseInt(searchParams.get('page') || '1', 10);
 
-  const [payload, isLoading, isError] = useFetch<IOrderData>(
+  const [payload, total, isLoading, isError] = useFetch<IOrderData>(
     fetchOrderData,
     (page - 1) * 50,
   );
-  console.log(payload);
 
   const handlePageChange = (pageNumber: number) => {
     setSearchParams({ page: String(pageNumber) });
@@ -31,7 +30,7 @@ const Admin = () => {
       </ul>
       <Paging
         page={page}
-        totalItemsCount={payload.length}
+        totalItemsCount={total}
         itemsCountPerPage={50}
         handlePageChange={handlePageChange}
       />
