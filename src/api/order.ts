@@ -1,17 +1,13 @@
 import { API_URL } from '@/constants/url';
 import { apiClient } from '@/api/apiClient';
+import { filterData } from '@/lib/utils/filter';
 
-export const fetchOrderData = async (startIndex: number, date?: string) => {
+export const fetchOrderData = async (startIndex: number, date: string) => {
   try {
     const response = await apiClient.get(API_URL);
     let data = response.data;
 
-    if (date !== 'all') {
-      data = data.filter(
-        (item: { transaction_time: string }) =>
-          item.transaction_time.substring(0, 10) === date,
-      );
-    }
+    data = filterData(data, date);
 
     const pageRequest = data.slice(startIndex, startIndex + 50);
     const total = data.length;

@@ -2,13 +2,13 @@ import { useEffect, useState } from 'react';
 
 type FetchDataFuncType<T> = (
   startIndex: number,
-  filterDate?: string | undefined,
+  date: string,
 ) => Promise<{ data: T[]; length: number }>;
 
 const useFetch = <T>(
   fetchData: FetchDataFuncType<T>,
   startIndex: number,
-  filterDate?: string | undefined,
+  date: string,
 ) => {
   const [payload, setPayload] = useState<T[]>([]);
   const [total, setTotal] = useState<number>(0);
@@ -17,7 +17,7 @@ const useFetch = <T>(
 
   useEffect(() => {
     setIsLoading(true);
-    fetchData(startIndex, filterDate)
+    fetchData(startIndex, date)
       .then((response) => {
         setPayload(response.data);
         setTotal(response.length);
@@ -28,7 +28,7 @@ const useFetch = <T>(
       .finally(() => {
         setIsLoading(false);
       });
-  }, [fetchData, startIndex, filterDate]);
+  }, [fetchData, startIndex, date]);
 
   return [payload, total, isLoading, isError] as const;
 };
