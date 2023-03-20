@@ -1,7 +1,5 @@
 import { useSearchParams } from 'react-router-dom';
-import { IOrderData } from '@/interface/orderData';
-
-const PAGE_PARAM_KEY = 'pageNumber';
+import { PAGE_PARAM_KEY } from '@/constants/pagenation';
 
 export const usePagenation = (lengthPerpage: number, filter?: string[]) => {
   const [searchParams, setSearchParams] = useSearchParams();

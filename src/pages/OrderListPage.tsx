@@ -3,10 +3,8 @@ import { usePagenation } from '@/lib/hooks/usePagenation';
 import { API_URL } from '@/constants/url';
 import OrderList from '@/components/OrderList';
 import Pagenation from '@/components/Pagenation';
-
-const ORDER_LIST_QUERY = 'order_list_query';
-const INTERVAL = 5000;
-const LENGTH_PER_PAGE = 50;
+import { ORDER_LIST_QUERY, INTERVAL } from '@/constants/query';
+import { LENGTH_PER_PAGE } from '@/constants/pagenation';
 
 const OrderListPage = () => {
   const { isLoading, isFetching, isError, data } = useRealtimeFetch(
