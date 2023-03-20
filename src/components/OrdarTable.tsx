@@ -9,12 +9,13 @@ import {
 } from '@chakra-ui/react';
 import { IOrderProps } from '@/interface/props';
 
-const OrderTable = ({ orderData }: IOrderProps) => {
+const OrderTable = ({ orderData, page }: IOrderProps) => {
   return (
     <TableContainer>
       <Table variant="simple">
         <Thead>
           <Tr>
+            <Th>id</Th>
             <Th>주문번호</Th>
             <Th>거래시간</Th>
             <Th>고객번호</Th>
@@ -24,9 +25,10 @@ const OrderTable = ({ orderData }: IOrderProps) => {
           </Tr>
         </Thead>
         <Tbody>
-          {orderData.map((item) => {
+          {orderData.map((item, index) => {
             return (
               <Tr key={item.id}>
+                <Td>{(page - 1) * 50 + index + 1}</Td>
                 <Td>{item.id}</Td>
                 <Td>{item.transaction_time}</Td>
                 <Td>{item.customer_id}</Td>

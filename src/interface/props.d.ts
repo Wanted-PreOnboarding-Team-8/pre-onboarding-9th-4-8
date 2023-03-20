@@ -7,4 +7,5 @@ export interface PagingProps {
 
 interface IOrderProps {
   orderData: IOrderData[];
+  page: number;
 }
