@@ -1,9 +1,12 @@
 import { useRealtimeFetch } from '@/lib/hooks/useRealtimeFetch';
+import { usePagenation } from '@/lib/hooks/usePagenation';
 import { API_URL } from '@/constants/url';
-import OrderList from '@/components/orderList';
+import OrderList from '@/components/OrderList';
+import Pagenation from '@/components/Pagenation';
 
 const ORDER_LIST_QUERY = 'order_list_query';
 const INTERVAL = 5000;
+const LENGTH_PER_PAGE = 50;
 
 const OrderListPage = () => {
   const { data, isLoading, isFetching, isError } = useRealtimeFetch(
@@ -12,13 +15,27 @@ const OrderListPage = () => {
     INTERVAL,
   );
 
+  const { fromCursor, movePage } = usePagenation(LENGTH_PER_PAGE);
+  console.log('listPage');
+
+  const currentPageData = data?.slice(fromCursor, fromCursor + LENGTH_PER_PAGE);
+
   return (
     <>
       <div>
         <h1>OrderList</h1>
-        {isLoading && <p>Loading...</p>}
-        {isError && <p>Err occured...</p>}
-        {data && <OrderList data={data} />}
+        {isFetching && <span>Fetching...</span>}
+        {isLoading && <span>Loading...</span>}
+        {isError && <span>Err occured...</span>}
+        <br />
+        {data && (
+          <Pagenation
+            lengthPerPage={LENGTH_PER_PAGE}
+            totalLength={data.length}
+            pagenate={movePage}
+          />
+        )}
+        {data && <OrderList data={currentPageData} />}
       </div>
     </>
   );
