@@ -1,6 +1,6 @@
 import { useCallback, useEffect } from 'react';
 import { useSearchParams } from 'react-router-dom';
-import { FILTERS } from '@/constants/order';
+import { FIELD, FILTERS } from '@/constants/order';
 
 const useFilterParams = (): UseFilterReturnType => {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -9,7 +9,7 @@ const useFilterParams = (): UseFilterReturnType => {
 
   useEffect(() => {
     if (!fieldParam) {
-      setSearchParams({ field: 'today', page: '1' });
+      setSearchParams({ field: FIELD.today, page: '1' });
     }
   }, [fieldParam, setSearchParams]);
 

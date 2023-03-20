@@ -6,43 +6,27 @@ import { IColumnData } from '@/interface/table';
 import Pagination from '@/components/pagination/Pagination';
 import { getSliceIndexes } from '@/lib/utils/pageHelper';
 import DataFilter from '@/components/filter/DataFilter';
-import { getOrders } from '@/store/slices/orderSlice';
 import useFilterParams from '@/lib/hooks/useFilterParams';
-import { DELAY } from '@/constants/order';
-import { useAppDispatch, useAppSelector } from '../store/index';
+import useFetch from '@/lib/hooks/useFetch';
+import { FIELD } from '@/constants/order';
+import { useAppSelector } from '../store/index';
 
 const OrderListPage = () => {
-  const dispatch = useAppDispatch();
   const { orderList, error } = useAppSelector((state) => state.orders);
   const [amendParams, fieldParam, pageParam] = useFilterParams();
 
+  useFetch(fieldParam);
   const [page, setPage] = useState<number>(pageParam ? parseInt(pageParam) : 1);
   const total = orderList.length;
 
   const { start, end } = getSliceIndexes(page);
 
   useEffect(() => {
-    amendParams({ field: fieldParam ? fieldParam : 'today', page: `${page}` });
+    amendParams({
+      field: fieldParam ? fieldParam : FIELD.today,
+      page: `${page}`,
+    });
   }, [page, fieldParam, amendParams]);
-
-  useEffect(() => {
-    const requestOrders = () => {
-      dispatch(
-        getOrders({
-          field: fieldParam ? (fieldParam as 'today' | 'total') : 'today',
-        }),
-      );
-    };
-    let timer: NodeJS.Timeout;
-    const updateOrders = () => {
-      requestOrders();
-      timer = setTimeout(updateOrders, DELAY);
-    };
-    updateOrders();
-    return () => {
-      clearTimeout(timer);
-    };
-  }, [fieldParam, dispatch]);
 
   const columnData: IColumnData<IOrder>[] = [
     { column: '주문번호', data: (data) => data.id },

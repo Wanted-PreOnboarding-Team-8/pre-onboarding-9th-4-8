@@ -1,14 +1,15 @@
 import { HStack, Select, Text, VStack } from '@chakra-ui/react';
 import useFilterParams from '@/lib/hooks/useFilterParams';
+import { FIELD } from '@/constants/order';
 
 const DataFilter = () => {
   const [amendParams, fieldParam] = useFilterParams();
 
   const onChangeSelectFields = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    if (e.currentTarget.value === 'today') {
-      amendParams({ field: 'today', page: '1' });
+    if (e.currentTarget.value === FIELD.today) {
+      amendParams({ field: FIELD.today, page: '1' });
     } else {
-      amendParams({ field: 'all', page: '1' });
+      amendParams({ field: FIELD.all, page: '1' });
     }
   };
 
@@ -17,7 +18,7 @@ const DataFilter = () => {
       <VStack>
         <Text fontWeight={'bold'}>거래 내역 조회</Text>
         <Select
-          value={fieldParam ? fieldParam : 'today'}
+          value={fieldParam ? fieldParam : FIELD.today}
           onChange={onChangeSelectFields}
           background={`var(--white)`}
         >

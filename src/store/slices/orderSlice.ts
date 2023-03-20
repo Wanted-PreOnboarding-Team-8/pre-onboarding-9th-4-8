@@ -2,12 +2,13 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { IOrderReducer } from '@/interface/order';
 import { getOrderList } from '@/api/order';
 import { filterByToday } from '@/lib/utils/filterHelper';
+import { FIELD } from '@/constants/order';
 
 export const getOrders = createAsyncThunk(
   'order/getOrderList',
-  async (param: { field: 'today' | 'total' }) => {
+  async (param: { field: FieldType }) => {
     const response = await getOrderList();
-    if (param.field === 'today') {
+    if (param.field === FIELD.today) {
       return filterByToday(response);
     }
     return response;

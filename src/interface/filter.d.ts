@@ -3,3 +3,5 @@ type UseFilterReturnType = [
   fieldParam: string | null,
   pageParam: string | null,
 ];
+
+type FieldType = 'today' | 'all';
