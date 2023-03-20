@@ -22,14 +22,8 @@ const OrderListPage = () => {
   const { start, end } = getSliceIndexes(page);
 
   useEffect(() => {
-    if (!fieldParam) {
-      amendParams({ field: 'today', page: '1' });
-    }
-  }, [fieldParam, amendParams]);
-
-  useEffect(() => {
-    amendParams({ page: `${page}` });
-  }, [page, amendParams]);
+    amendParams({ field: fieldParam ? fieldParam : 'today', page: `${page}` });
+  }, [page, fieldParam, amendParams]);
 
   useEffect(() => {
     const requestOrders = () => {
@@ -45,8 +39,6 @@ const OrderListPage = () => {
       timer = setTimeout(updateOrders, DELAY);
     };
     updateOrders();
-    requestOrders();
-
     return () => {
       clearTimeout(timer);
     };
