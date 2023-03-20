@@ -31,7 +31,7 @@ const OrderTable = ({ orderData }: IOrderProps) => {
                 <Td>{item.transaction_time}</Td>
                 <Td>{item.customer_id}</Td>
                 <Td>{item.customer_name}</Td>
-                <Td>{item.status}</Td>
+                <Td>{item.status ? '완료' : '대기'}</Td>
                 <Td isNumeric>{item.currency}</Td>
               </Tr>
             );

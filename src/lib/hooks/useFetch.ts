@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useQuery } from 'react-query';
 
 type FetchDataFuncType<T> = (
   startIndex: number,
@@ -10,25 +10,18 @@ const useFetch = <T>(
   startIndex: number,
   date: string,
 ) => {
-  const [payload, setPayload] = useState<T[]>([]);
-  const [total, setTotal] = useState<number>(0);
-  const [isLoading, setIsLoading] = useState(false);
-  const [isError, setIsError] = useState(false);
-
-  useEffect(() => {
-    setIsLoading(true);
-    fetchData(startIndex, date)
-      .then((response) => {
-        setPayload(response.data);
-        setTotal(response.length);
-      })
-      .catch(() => {
-        setIsError(true);
-      })
-      .finally(() => {
-        setIsLoading(false);
-      });
-  }, [fetchData, startIndex, date]);
+  const {
+    data: { data: payload = [], length: total } = { data: [], length: 0 },
+    isLoading,
+    isError,
+  } = useQuery(
+    ['fetchData', startIndex, date],
+    async () => {
+      const response = await fetchData(startIndex, date);
+      return response;
+    },
+    { refetchInterval: 5000 },
+  );
 
   return [payload, total, isLoading, isError] as const;
 };
