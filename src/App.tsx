@@ -1,18 +1,19 @@
 import { ChakraProvider } from '@chakra-ui/react';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import OrderList from './components/orderList';
+import { BrowserRouter } from 'react-router-dom';
+import Router from '@/Router';
 
 const queryClient = new QueryClient();
 
 const App = () => {
   return (
-    <ChakraProvider>
-      <QueryClientProvider client={queryClient}>
-        <div className="App">
-          <OrderList></OrderList>
-        </div>
-      </QueryClientProvider>
-    </ChakraProvider>
+    <BrowserRouter>
+      <ChakraProvider>
+        <QueryClientProvider client={queryClient}>
+          <Router />
+        </QueryClientProvider>
+      </ChakraProvider>
+    </BrowserRouter>
   );
 };
 
