@@ -1,16 +1,17 @@
-import { useState } from 'react';
+import { useSearchParams } from 'react-router-dom';
 import { IOrderData } from '@/interface/orderData';
 
-export const usePagenation = (lengthPerpage: number, filter?: string[]) => {
-  const [fromCursor, setFromCursor] = useState(0);
+const PAGE_PARAM_KEY = 'pageNumber';
 
-  const findLastCursor = (soFarData: IOrderData[]) => {
-    // 필터 적용시 적절한 커서를 찾는다.
-  };
+export const usePagenation = (lengthPerpage: number, filter?: string[]) => {
+  const [searchParams, setSearchParams] = useSearchParams();
+  const curPageNumber = searchParams.get(PAGE_PARAM_KEY);
 
   const movePage = (pageNubmer: number) => {
-    setFromCursor((pageNubmer - 1) * lengthPerpage);
+    setSearchParams(`${PAGE_PARAM_KEY}=${pageNubmer}`);
   };
 
-  return { fromCursor, movePage, findLastCursor };
+  const fromCursor = (Number(curPageNumber) - 1) * lengthPerpage;
+
+  return { fromCursor, movePage };
 };

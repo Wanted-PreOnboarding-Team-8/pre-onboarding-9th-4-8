@@ -9,14 +9,13 @@ const INTERVAL = 5000;
 const LENGTH_PER_PAGE = 50;
 
 const OrderListPage = () => {
-  const { data, isLoading, isFetching, isError } = useRealtimeFetch(
+  const { isLoading, isFetching, isError, data } = useRealtimeFetch(
     [ORDER_LIST_QUERY],
     API_URL,
     INTERVAL,
   );
 
   const { fromCursor, movePage } = usePagenation(LENGTH_PER_PAGE);
-  console.log('listPage');
 
   const currentPageData = data?.slice(fromCursor, fromCursor + LENGTH_PER_PAGE);
 

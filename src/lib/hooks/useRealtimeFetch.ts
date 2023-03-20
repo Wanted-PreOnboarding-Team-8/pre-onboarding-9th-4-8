@@ -18,7 +18,6 @@ export const useRealtimeFetch = (
     {
       refetchInterval: interval,
       staleTime: interval,
-      cacheTime: interval,
     },
   );
 
