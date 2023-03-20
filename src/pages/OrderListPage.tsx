@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Badge, Heading, VStack } from '@chakra-ui/react';
+import { Badge, VStack } from '@chakra-ui/react';
 import { IOrder } from '@/interface/order';
 import DataTable from '@/components/table/DataTable';
 import { IColumnData } from '@/interface/table';
@@ -13,9 +13,7 @@ import { useAppDispatch, useAppSelector } from '../store/index';
 
 const OrderListPage = () => {
   const dispatch = useAppDispatch();
-  const { orderList, isLoading, error } = useAppSelector(
-    (state) => state.orders,
-  );
+  const { orderList, error } = useAppSelector((state) => state.orders);
   const [amendParams, fieldParam, pageParam] = useFilterParams();
 
   const [page, setPage] = useState<number>(pageParam ? parseInt(pageParam) : 1);
@@ -35,14 +33,13 @@ const OrderListPage = () => {
 
   useEffect(() => {
     const requestOrders = () => {
-      console.log(fieldParam);
       dispatch(
         getOrders({
           field: fieldParam ? (fieldParam as 'today' | 'total') : 'today',
         }),
       );
     };
-    let timer: any;
+    let timer: NodeJS.Timeout;
     const updateOrders = () => {
       requestOrders();
       timer = setTimeout(updateOrders, DELAY);
@@ -63,21 +60,29 @@ const OrderListPage = () => {
     },
     {
       column: '주문처리상태',
-      data: (data) => <Badge>{data.status === true ? '완료' : '예정'}</Badge>,
+      data: (data) =>
+        data.status === true ? (
+          <Badge background={`var(--complete)`} color={`var(--complete-text)`}>
+            완료
+          </Badge>
+        ) : (
+          <Badge
+            background={`var(--not-complete)`}
+            color={`var(--not-complete-text)`}
+          >
+            예정
+          </Badge>
+        ),
     },
     { column: '고객번호', data: (data) => data.customer_id },
     { column: '고객이름', data: (data) => data.customer_name },
     { column: '가격', data: (data) => data.currency },
   ];
 
-  if (isLoading) return <>Loading...</>;
   if (error) return <>Error!!</>;
 
   return (
-    <VStack>
-      <Heading as="h2" size="lg">
-        당일 거래 내역
-      </Heading>
+    <VStack p="30">
       <DataFilter />
       <DataTable data={orderList.slice(start, end)} columnData={columnData} />
       {total && <Pagination total={total} page={page} setPage={setPage} />}

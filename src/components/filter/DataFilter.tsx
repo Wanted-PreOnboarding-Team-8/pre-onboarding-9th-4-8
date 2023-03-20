@@ -13,12 +13,13 @@ const DataFilter = () => {
   };
 
   return (
-    <HStack>
+    <HStack w="80%" p="5" background={`var(--light-grey)`}>
       <VStack>
-        <Text>거래 내역 조회</Text>
+        <Text fontWeight={'bold'}>거래 내역 조회</Text>
         <Select
           value={fieldParam ? fieldParam : 'today'}
           onChange={onChangeSelectFields}
+          background={`var(--white)`}
         >
           <option value="today">오늘</option>
           <option value="all">전체</option>

@@ -9,8 +9,8 @@ type Props<T> = {
 
 const DataTable = <T extends object>({ data, columnData }: Props<T>) => {
   return (
-    <TableContainer h="500" overflowY={'scroll'}>
-      <Table variant="simple" size={'sm'}>
+    <TableContainer w="80%">
+      <Table variant="simple" size="sm">
         <Thead>
           <Tr>
             {columnData.map((d, idx) => (
@@ -19,6 +19,7 @@ const DataTable = <T extends object>({ data, columnData }: Props<T>) => {
                 onClick={() => {
                   d.onSort && d.onSort();
                 }}
+                textAlign="center"
               >
                 {d.column}
               </Th>
@@ -29,7 +30,7 @@ const DataTable = <T extends object>({ data, columnData }: Props<T>) => {
           {data.map((d, ri) => (
             <Tr key={`table-row-${ri}`}>
               {columnData.map((column, ci) => (
-                <Td key={`table-data-${ri}-${ci}`}>
+                <Td key={`table-data-${ri}-${ci}`} textAlign="center">
                   <>{column.data(d)}</>
                 </Td>
               ))}
