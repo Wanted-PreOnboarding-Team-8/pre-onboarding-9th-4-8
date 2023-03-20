@@ -5,9 +5,11 @@ const Pagenation = ({
   pagenate,
 }: {
   lengthPerPage: number;
-  totalLength: number;
+  totalLength: number | undefined;
   pagenate: (pageNumber: number) => void;
 }) => {
+  if (!totalLength) return null;
+
   const pageNumbers = [];
 
   for (let i = 1; i <= Math.ceil(totalLength / lengthPerPage); i++)
