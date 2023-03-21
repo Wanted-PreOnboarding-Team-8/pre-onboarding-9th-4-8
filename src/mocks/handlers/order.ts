@@ -10,10 +10,27 @@ export const orderListHandlers = [
     const limit = Number(req.url.searchParams.get('limit'));
     const date = req.url.searchParams.get('date');
     const sort = req.url.searchParams.get('sort');
+    const status = req.url.searchParams.get('status');
 
-    const dataOfSelectedDate = date
-      ? mockData.filter((item) => item.transaction_time.split(' ')[0] === date)
-      : mockData;
+    let dataOfSelectedDate = mockData;
+
+    if (status === 'true') {
+      dataOfSelectedDate = dataOfSelectedDate.filter(
+        (item) => item.status === true,
+      );
+    }
+
+    if (status === 'false') {
+      dataOfSelectedDate = dataOfSelectedDate.filter(
+        (item) => item.status === false,
+      );
+    }
+
+    if (date) {
+      dataOfSelectedDate = dataOfSelectedDate.filter(
+        (item) => item.transaction_time.split(' ')[0] === date,
+      );
+    }
 
     if (sort) {
       dataOfSelectedDate.sort(sortMethods[sort]);
