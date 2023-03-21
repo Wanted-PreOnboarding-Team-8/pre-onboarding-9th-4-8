@@ -16,3 +16,8 @@ export interface SortButtonProps {
   defaultValue?: SortOrderType;
   onClick: (orderBy?: SortOrderType) => void;
 }
+
+export interface IFilterTitleProps {
+  title: string;
+  alignSelf?: Token<CSS.Property.AlignSelf>;
+}

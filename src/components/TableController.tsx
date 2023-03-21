@@ -1,20 +1,27 @@
-import { Icon, Heading, HStack, VStack } from '@chakra-ui/react';
+import { Icon, HStack, VStack, Img, Button } from '@chakra-ui/react';
 import { CheckIcon, WarningIcon } from '@chakra-ui/icons';
 import useSetParams from '@/lib/hooks/useSetParams';
 import { TODAY } from '@/constants/config';
 import { StatusType } from '@/interface/main';
+import reset from '@/common/icons/reset.svg';
 import SearchBar from './SearchBar';
 import FilterMenu from './FilterMenu';
+import FilterTitle from './FilterTitle';
 
 const TableController = () => {
-  const { currentDate, currentStatus, onSetParams } = useSetParams();
+  const { currentDate, currentStatus, onSetParams, onResetParams } =
+    useSetParams();
 
   return (
     <HStack>
       <VStack>
-        <Heading as="h6" size="xs" alignSelf={'flex-start'}>
-          Search for name
-        </Heading>
+        <FilterTitle title={'reset'} alignSelf={'center'} />
+        <Button onClick={onResetParams} background="none">
+          <Img src={reset} alt="reset" />
+        </Button>
+      </VStack>
+      <VStack>
+        <FilterTitle title={'Search for name'} />
         <SearchBar
           onChange={(query: string) =>
             onSetParams({
@@ -24,9 +31,7 @@ const TableController = () => {
         />
       </VStack>
       <VStack>
-        <Heading as="h6" size="xs" alignSelf={'flex-start'}>
-          Status
-        </Heading>
+        <FilterTitle title={'Status'} />
         <FilterMenu
           selectedItem={
             currentStatus
@@ -56,9 +61,7 @@ const TableController = () => {
         />
       </VStack>
       <VStack>
-        <Heading as="h6" size="xs" alignSelf={'flex-start'}>
-          Show
-        </Heading>
+        <FilterTitle title={'Show'} />
         <FilterMenu
           selectedItem={currentDate === 'all' ? '전체' : '오늘'}
           items={[

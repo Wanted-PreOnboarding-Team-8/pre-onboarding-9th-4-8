@@ -51,6 +51,10 @@ const useSetParams = () => {
     window.scrollTo(0, 0);
   };
 
+  const onResetParams = () => {
+    setSearchParams({});
+  };
+
   return {
     currentPage,
     currentDate,
@@ -58,6 +62,7 @@ const useSetParams = () => {
     currentStatus,
     currentQuery,
     onSetParams,
+    onResetParams,
   };
 };
 
