@@ -1,7 +1,5 @@
 import { ITEMS_PER_PAGE } from '@/constants/units';
 
-export const formatDollarToNumber = (str: string) => Number(str.split('$')[1]);
-
 export const formatNumToDollar = (num: number) =>
   `$ ${num.toLocaleString('en')}`;
 

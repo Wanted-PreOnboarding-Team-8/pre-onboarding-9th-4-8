@@ -55,7 +55,7 @@ params: {
             "currency": "$50.25"
         }
     ],
-    "orderCount": {
+    "orderInfo": {
         endDate: "2023-3-8",
         startDate: "2023-3-8",
         totalCount: 267,

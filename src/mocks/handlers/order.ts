@@ -1,6 +1,6 @@
 import { rest } from 'msw';
-import { formatDollarToNumber } from '@/lib/utils/formattingHelper';
-import { generateStartAndEndDate } from '@/lib/utils/generator';
+import { formatDollarToNumber } from '@/mocks/utils/formatter';
+import { generateStartAndEndDate } from '@/mocks/utils/formatter';
 import mockData from '../storage/mock_data.json';
 
 export const orderListHandlers = [
