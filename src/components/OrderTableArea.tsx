@@ -20,10 +20,17 @@ import { formatPageInfo } from '@/lib/utils/formattingHelper';
 import useGetOrderData from '@/lib/hooks/useGetOrderData';
 import TablePagination from './TablePagination';
 import TableController from './TableController';
+import TableCkeckbox from './TableCkeckbox';
 
 const OrderTableArea = () => {
-  const { currentPage, currentDate, currentSort, onSetParams } = useSetParams();
-  const { data } = useGetOrderData(currentPage, currentDate, currentSort);
+  const { currentPage, currentDate, currentSort, currentStatus, onSetParams } =
+    useSetParams();
+  const { data } = useGetOrderData(
+    currentPage,
+    currentDate,
+    currentSort,
+    currentStatus,
+  );
 
   const handleOrderId = () => {
     const sortValue = currentSort === 'idDESC' ? 'idASC' : 'idDESC';
@@ -52,6 +59,7 @@ const OrderTableArea = () => {
         <Spacer />
         <TableController />
       </Flex>
+      <TableCkeckbox />
       <TableContainer>
         <Table variant="simple">
           <TableCaption>
