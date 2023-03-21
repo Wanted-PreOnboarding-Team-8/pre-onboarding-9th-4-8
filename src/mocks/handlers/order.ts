@@ -2,7 +2,7 @@ import { rest } from 'msw';
 import { formatDollarToNumber } from '@/lib/utils/formattingHelper';
 import { generateStartAndEndDate } from '@/lib/utils/generator';
 import mockData from '../storage/mock_data.json';
-import { sortMethods } from './sort';
+import { sortMethods, filterStatus, filterDate } from './filterHelper';
 
 export const orderListHandlers = [
   rest.get('/mock/order', (req, res, ctx) => {
@@ -14,22 +14,12 @@ export const orderListHandlers = [
 
     let dataOfSelectedDate = mockData;
 
-    if (status === 'true') {
-      dataOfSelectedDate = dataOfSelectedDate.filter(
-        (item) => item.status === true,
-      );
-    }
-
-    if (status === 'false') {
-      dataOfSelectedDate = dataOfSelectedDate.filter(
-        (item) => item.status === false,
-      );
+    if (status) {
+      dataOfSelectedDate = filterStatus(dataOfSelectedDate, status);
     }
 
     if (date) {
-      dataOfSelectedDate = dataOfSelectedDate.filter(
-        (item) => item.transaction_time.split(' ')[0] === date,
-      );
+      dataOfSelectedDate = filterDate(dataOfSelectedDate, date);
     }
 
     if (sort) {
