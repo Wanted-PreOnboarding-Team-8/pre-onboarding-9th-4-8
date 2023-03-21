@@ -13,51 +13,34 @@ import { CheckIcon, WarningIcon } from '@chakra-ui/icons';
 import { IoIosPeople } from 'react-icons/io';
 import { TfiMoney } from 'react-icons/tfi';
 import { formatNumToDollar } from '@/lib/utils/formattingHelper';
-import { IOrderItem } from '@/interface/main';
-import useGetOrderData from '@/lib/hooks/useGetOrderData';
-import useSetParams from '@/lib/hooks/useSetParams';
+import { IFetchData, IOrderItem } from '@/interface/main';
 
-const StatsArea = () => {
-  const {
-    currentPage,
-    currentDate,
-    currentSort,
-    currentCustomer,
-    currentStatus,
-  } = useSetParams();
-  const { data } = useGetOrderData(
-    currentPage,
-    currentDate,
-    currentSort,
-    currentStatus,
-    currentCustomer,
-  );
-
+const StatsArea = ({ order, orderInfo }: IFetchData) => {
   const stats = [
     {
       label: 'Total Order',
-      stat: data.orderInfo.totalCount,
+      stat: orderInfo.totalCount,
       icon: IoIosPeople,
       iconColor: 'blue.900',
-      helpText: `${data.orderInfo.startDate} - ${data.orderInfo.endDate}`,
+      helpText: `${orderInfo.startDate} - ${orderInfo.endDate}`,
     },
     {
       label: 'Total Currency',
-      stat: formatNumToDollar(data.orderInfo.totalCurrency),
+      stat: formatNumToDollar(orderInfo.totalCurrency),
       icon: TfiMoney,
       iconColor: 'blue.900',
-      helpText: `${data.orderInfo.startDate} - ${data.orderInfo.endDate}`,
+      helpText: `${orderInfo.startDate} - ${orderInfo.endDate}`,
     },
     {
       label: 'Complete',
-      stat: data.order.filter((item: IOrderItem) => item.status).length,
+      stat: order.filter((item: IOrderItem) => item.status).length,
       icon: CheckIcon,
       iconColor: 'green.500',
       helpText: 'per Page',
     },
     {
       label: 'Incomplete',
-      stat: data.order.filter((item: IOrderItem) => !item.status).length,
+      stat: order.filter((item: IOrderItem) => !item.status).length,
       icon: WarningIcon,
       iconColor: 'orange.500',
       helpText: 'per Page',

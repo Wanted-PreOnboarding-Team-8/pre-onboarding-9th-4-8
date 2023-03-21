@@ -14,6 +14,11 @@ export interface IOrderInfo {
   totalCurrency: number;
 }
 
+export interface IFetchData {
+  order: IOrderItem[];
+  orderInfo: IOrderInfo;
+}
+
 export interface IOnSetParams {
   pageValue?: number | string;
   dateValue?: string;

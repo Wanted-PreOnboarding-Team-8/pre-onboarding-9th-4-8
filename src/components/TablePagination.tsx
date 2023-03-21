@@ -2,30 +2,13 @@ import { Button, Stack } from '@chakra-ui/react';
 import useSetParams from '@/lib/hooks/useSetParams';
 import { ITEMS_PER_PAGE } from '@/constants/units';
 import { generateZeroToNArr } from '@/lib/utils/generator';
-import useGetOrderData from '@/lib/hooks/useGetOrderData';
 
-const TablePagination = () => {
-  const {
-    currentPage,
-    currentDate,
-    currentSort,
-    currentStatus,
-    currentCustomer,
-    onSetParams,
-  } = useSetParams();
-  const { data } = useGetOrderData(
-    currentPage,
-    currentDate,
-    currentSort,
-    currentStatus,
-    currentCustomer,
-  );
+const TablePagination = ({ totalCount }: { totalCount: number }) => {
+  const { currentPage, onSetParams } = useSetParams();
 
   return (
     <Stack spacing={2} direction="row" align="center">
-      {generateZeroToNArr(
-        Math.ceil(data.orderInfo.totalCount / ITEMS_PER_PAGE),
-      ).map((num) => (
+      {generateZeroToNArr(Math.ceil(totalCount / ITEMS_PER_PAGE)).map((num) => (
         <Button
           type="button"
           colorScheme="blue"

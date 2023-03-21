@@ -14,31 +14,16 @@ import {
   Heading,
 } from '@chakra-ui/react';
 import { CheckIcon, WarningIcon } from '@chakra-ui/icons';
-import { IOrderItem } from '@/interface/main';
+import { IFetchData, IOrderItem } from '@/interface/main';
 import useSetParams from '@/lib/hooks/useSetParams';
 import { formatPageInfo } from '@/lib/utils/formattingHelper';
-import useGetOrderData from '@/lib/hooks/useGetOrderData';
 import TablePagination from './TablePagination';
 import TableController from './TableController';
 import TableCkeckbox from './TableCkeckbox';
 import TableForm from './TableFrom';
 
-const OrderTableArea = () => {
-  const {
-    currentPage,
-    currentDate,
-    currentSort,
-    currentStatus,
-    currentCustomer,
-    onSetParams,
-  } = useSetParams();
-  const { data } = useGetOrderData(
-    currentPage,
-    currentDate,
-    currentSort,
-    currentStatus,
-    currentCustomer,
-  );
+const OrderTableArea = ({ order, orderInfo }: IFetchData) => {
+  const { currentPage, currentDate, currentSort, onSetParams } = useSetParams();
 
   const handleOrderId = () => {
     const sortValue = currentSort === 'idDESC' ? 'idASC' : 'idDESC';
@@ -72,11 +57,7 @@ const OrderTableArea = () => {
       <TableContainer>
         <Table variant="simple">
           <TableCaption>
-            {formatPageInfo(
-              currentPage,
-              data.order.length,
-              data.orderInfo.totalCount,
-            )}
+            {formatPageInfo(currentPage, order.length, orderInfo.totalCount)}
           </TableCaption>
           <Thead>
             <Tr>
@@ -88,7 +69,7 @@ const OrderTableArea = () => {
             </Tr>
           </Thead>
           <Tbody>
-            {data.order.map((orderItem: IOrderItem) => {
+            {order.map((orderItem: IOrderItem) => {
               return (
                 <Tr key={orderItem.id}>
                   <Td>{orderItem.id}</Td>
@@ -116,7 +97,7 @@ const OrderTableArea = () => {
           </Tbody>
         </Table>
       </TableContainer>
-      <TablePagination />
+      <TablePagination totalCount={orderInfo.totalCount} />
     </Box>
   );
 };
