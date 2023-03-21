@@ -18,6 +18,7 @@ export interface IOnSetParams {
   pageValue?: number;
   dateValue?: string;
   sortValue?: SortParamType;
+  statusValue?: StatusType;
   event?: React.ChangeEvent<HTMLInputElement>;
 }
 
@@ -33,3 +34,5 @@ export interface IOrderData {
 export type SortType = 'id' | 'transactionTime';
 export type SortOrderType = 'Asc' | 'Desc';
 export type SortParamType = `${SortType}${SortOrderType}`;
+
+export type StatusType = 'complete' | 'incomplete';

@@ -19,6 +19,7 @@ import {
   IOrderData,
   SortOrderType,
   SortType,
+  StatusType,
 } from '@/interface/main';
 import useSetParams from '@/lib/hooks/useSetParams';
 import { formatPageInfo } from '@/lib/utils/formattingHelper';
@@ -26,11 +27,17 @@ import useGetOrderData from '@/lib/hooks/useGetOrderData';
 import TablePagination from './TablePagination';
 import TableController from './TableController';
 import SortButton from './SortButton';
+import StatusFilterButton from './StatusFilterButton';
 
 const OrderTableArea = () => {
-  const { currentPage, currentDate, currentSort, onSetParams } = useSetParams();
-  const orderData = useGetOrderData(currentPage, currentDate, currentSort)
-    .data as IOrderData;
+  const { currentPage, currentDate, currentSort, currentStatus, onSetParams } =
+    useSetParams();
+  const orderData = useGetOrderData(
+    currentPage,
+    currentDate,
+    currentSort,
+    currentStatus,
+  ).data as IOrderData;
 
   const onClickSortButton = (sortBy: SortType, orderBy?: SortOrderType) => {
     onSetParams({
@@ -67,7 +74,16 @@ const OrderTableArea = () => {
                   }
                 />
               </Th>
-              <Th>Status</Th>
+              <Th>
+                Status{' '}
+                <StatusFilterButton
+                  onChange={(value: StatusType) => {
+                    onSetParams({
+                      statusValue: value,
+                    });
+                  }}
+                />
+              </Th>
               <Th>Customer Name / ID</Th>
               <Th>
                 Time{' '}

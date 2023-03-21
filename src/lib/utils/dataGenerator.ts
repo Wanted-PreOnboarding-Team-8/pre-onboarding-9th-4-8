@@ -7,6 +7,13 @@ export const filterByDate = (
   return data.filter((item) => item.transaction_time.split(' ')[0] === date);
 };
 
+export const filterByStatus = (
+  data: IOrderItem[],
+  status: boolean,
+): IOrderItem[] => {
+  return data.filter((item) => item.status === status);
+};
+
 export const sortById = (
   data: IOrderItem[],
   orderBy: SortOrderType,

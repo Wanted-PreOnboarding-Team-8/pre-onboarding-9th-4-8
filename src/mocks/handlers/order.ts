@@ -4,9 +4,10 @@ import {
   generateSortQuery,
   generateStartAndEndDate,
 } from '@/lib/utils/generator';
-import { IOrderItem, SortParamType } from '@/interface/main';
+import { IOrderItem, SortParamType, StatusType } from '@/interface/main';
 import {
   filterByDate,
+  filterByStatus,
   sortByDateTime,
   sortById,
 } from '@/lib/utils/dataGenerator';
@@ -18,19 +19,25 @@ export const orderListHandlers = [
     const limit = Number(req.url.searchParams.get('limit'));
     const date = req.url.searchParams.get('date');
     const sort = req.url.searchParams.get('sort');
+    const status = req.url.searchParams.get('status') as StatusType;
 
     let orderList: IOrderItem[] = mockData;
 
     orderList = date ? filterByDate(orderList, date) : orderList;
 
     const sorts = sort ? sort.split(',') : ['idAsc'];
-    console.log(sorts);
     sorts.forEach((s) => {
       const { sortBy, orderBy } = generateSortQuery(s as SortParamType);
       if (sortBy === 'id') orderList = sortById(orderList, orderBy);
       if (sortBy === 'transactionTime')
         orderList = sortByDateTime(orderList, orderBy);
     });
+
+    if (status)
+      orderList = filterByStatus(
+        orderList,
+        status === 'complete' ? true : false,
+      );
 
     const { startDate, endDate } = generateStartAndEndDate(orderList);
 
