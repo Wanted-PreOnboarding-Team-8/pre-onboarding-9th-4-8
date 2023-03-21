@@ -25,7 +25,6 @@ export const orderListHandlers = [
 
     let orderList: IOrderItem[] = mockData;
 
-    console.log(date);
     orderList =
       date !== 'all' && date !== null
         ? filterByDate(orderList, date)
