@@ -1,10 +1,10 @@
 import { useSearchParams } from 'react-router-dom';
 import { IOnSetParams } from '@/interface/main';
 
-const useSetParams = () => {
+const useParams = () => {
   const [searchParams, setSearchParams] = useSearchParams();
-  const currentPage = Number(searchParams.get('page')) || 1;
-  const currentDate = searchParams.get('date');
+  const pageNumber = Number(searchParams.get('page')) || 1;
+  const selectedDate = searchParams.get('date');
 
   const onSetParams = ({ pageValue, dateValue, event }: IOnSetParams) => {
     if (pageValue !== undefined) searchParams.set('page', String(pageValue));
@@ -15,7 +15,7 @@ const useSetParams = () => {
     window.scrollTo(0, 0);
   };
 
-  return { currentPage, currentDate, onSetParams };
+  return { pageNumber, selectedDate, onSetParams };
 };
 
-export default useSetParams;
+export default useParams;

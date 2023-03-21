@@ -15,15 +15,16 @@ import {
 } from '@chakra-ui/react';
 import { CheckIcon, WarningIcon } from '@chakra-ui/icons';
 import { IOrderItem } from '@/interface/main';
-import useSetParams from '@/lib/hooks/useSetParams';
+import useParams from '@/lib/hooks/useParams';
 import { formatPageInfo } from '@/lib/utils/formattingHelper';
 import useGetOrderData from '@/lib/hooks/useGetOrderData';
+import DatePicker from './DatePicker';
 import TablePagination from './TablePagination';
-import TableController from './TableController';
+import { TodayOnlyFilter } from './tableControllers/Filters';
 
 const OrderTableArea = () => {
-  const { currentPage, currentDate } = useSetParams();
-  const { data } = useGetOrderData(currentPage, currentDate);
+  const { pageNumber, selectedDate } = useParams();
+  const { data } = useGetOrderData(pageNumber, selectedDate);
 
   return (
     <Box bg="white" w="100%" borderRadius="2xl" p="1em 2em">
@@ -32,18 +33,31 @@ const OrderTableArea = () => {
           <Heading size="md">주문 테이블</Heading>
         </Box>
         <Spacer />
-        <TableController />
+        <Flex direction="column">
+          <Box mb="2">
+            <TodayOnlyFilter />
+          </Box>
+          <DatePicker />
+        </Flex>
       </Flex>
-      <TableContainer>
+      <TableContainer mt="5">
         <Table variant="simple">
           <TableCaption>
             {formatPageInfo(
-              currentPage,
+              pageNumber,
               data.order.length,
               data.orderInfo.totalCount,
             )}
           </TableCaption>
           <Thead>
+            <Tr>
+              <Th>sort</Th>
+              <Th>filter</Th>
+              <Th>
+                <input placeholder="search name" />
+              </Th>
+              <Th>sort</Th>
+            </Tr>
             <Tr>
               <Th>Order ID</Th>
               <Th>Status</Th>

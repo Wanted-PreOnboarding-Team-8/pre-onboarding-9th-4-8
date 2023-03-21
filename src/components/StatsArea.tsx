@@ -15,11 +15,11 @@ import { TfiMoney } from 'react-icons/tfi';
 import { formatNumToDollar } from '@/lib/utils/formattingHelper';
 import { IOrderItem } from '@/interface/main';
 import useGetOrderData from '@/lib/hooks/useGetOrderData';
-import useSetParams from '@/lib/hooks/useSetParams';
+import useParams from '@/lib/hooks/useParams';
 
 const StatsArea = () => {
-  const { currentPage, currentDate } = useSetParams();
-  const { data } = useGetOrderData(currentPage, currentDate);
+  const { pageNumber, selectedDate } = useParams();
+  const { data } = useGetOrderData(pageNumber, selectedDate);
 
   const stats = [
     {
@@ -41,14 +41,14 @@ const StatsArea = () => {
       stat: data.order.filter((item: IOrderItem) => item.status).length,
       icon: CheckIcon,
       iconColor: 'green.500',
-      helpText: 'per Page',
+      helpText: `of ${data.order.length}`,
     },
     {
       label: 'Incomplete',
       stat: data.order.filter((item: IOrderItem) => !item.status).length,
       icon: WarningIcon,
       iconColor: 'orange.500',
-      helpText: 'per Page',
+      helpText: `of ${data.order.length}`,
     },
   ];
   return (

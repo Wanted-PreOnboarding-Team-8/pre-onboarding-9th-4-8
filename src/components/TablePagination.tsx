@@ -1,12 +1,12 @@
 import { Button, Stack } from '@chakra-ui/react';
-import useSetParams from '@/lib/hooks/useSetParams';
+import useParams from '@/lib/hooks/useParams';
 import { ITEMS_PER_PAGE } from '@/constants/units';
 import { generateZeroToNArr } from '@/lib/utils/generator';
 import useGetOrderData from '@/lib/hooks/useGetOrderData';
 
 const TablePagination = () => {
-  const { currentPage, currentDate, onSetParams } = useSetParams();
-  const { data } = useGetOrderData(currentPage, currentDate);
+  const { pageNumber, selectedDate, onSetParams } = useParams();
+  const { data } = useGetOrderData(pageNumber, selectedDate);
 
   return (
     <Stack spacing={2} direction="row" align="center">
@@ -19,7 +19,7 @@ const TablePagination = () => {
           size="sm"
           key={num}
           onClick={() => onSetParams({ pageValue: num + 1 })}
-          variant={currentPage === num + 1 ? 'solid' : 'outline'}
+          variant={pageNumber === num + 1 ? 'solid' : 'outline'}
         >
           {num + 1}
         </Button>

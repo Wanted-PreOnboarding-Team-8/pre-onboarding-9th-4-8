@@ -1,23 +1,18 @@
 import { Input } from '@chakra-ui/react';
-import useSetParams from '@/lib/hooks/useSetParams';
+import useParams from '@/lib/hooks/useParams';
 
 const DatePicker = () => {
-  const { currentDate, onSetParams } = useSetParams();
+  const { selectedDate, onSetParams } = useParams();
 
   return (
-    <>
-      {currentDate && (
-        <Input
-          placeholder="Select Date and Time"
-          size="lg"
-          bg="white"
-          type="date"
-          border="hidden"
-          value={currentDate}
-          onChange={(event) => onSetParams({ event })}
-        />
-      )}
-    </>
+    <Input
+      placeholder="Select Date and Time"
+      size="lg"
+      bg="white"
+      type="date"
+      value={selectedDate || ''}
+      onChange={(event) => onSetParams({ event })}
+    />
   );
 };
 
