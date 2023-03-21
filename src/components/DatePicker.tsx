@@ -11,7 +11,7 @@ const DatePicker = () => {
       bg="white"
       type="date"
       value={selectedDate || ''}
-      onChange={(event) => onSetParams({ event })}
+      onChange={(event) => onSetParams({ dateSelectEvent: event })}
     />
   );
 };

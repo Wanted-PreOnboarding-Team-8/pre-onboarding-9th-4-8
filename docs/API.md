@@ -10,11 +10,12 @@
 
 #### Parameter
 
-| Name     | type    | Description                                   |
-| -------- | ------- | --------------------------------------------- |
-| `offset` | integer | 주문 목록의 오프셋/건너뛰기 (페이지 번호 - 1) |
-| `limit`  | integer | 반환된 주문 목록 수 제한                      |
-| `date`   | string  | 날짜 (yyyy-mm-dd), 빈값 or null이면 전체 날짜             |
+| Name         | type    | Description                                   |
+| ------------ | ------- | --------------------------------------------- |
+| `offset`     | integer | 주문 목록의 오프셋/건너뛰기 (페이지 번호 - 1) |
+| `limit`      | integer | 반환된 주문 목록 수 제한                      |
+| `date`       | string  | 날짜 (yyyy-mm-dd), 빈값 or null이면 전체 날짜 |
+| `orderStatus`| string  | 주문 상태 (status)                            |
 
 ### Response
 
@@ -32,6 +33,7 @@ params: {
     offset: 0,
     limit: 50,
     date: '2023-03-08'
+    orderStatus: 'complete'
 }
 
 # Response 200 OK

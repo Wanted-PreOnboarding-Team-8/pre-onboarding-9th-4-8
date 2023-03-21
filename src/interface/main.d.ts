@@ -17,7 +17,8 @@ export interface IOrderInfo {
 export interface IOnSetParams {
   pageValue?: number;
   dateValue?: string;
-  event?: React.ChangeEvent<HTMLInputElement>;
+  dateSelectEvent?: React.ChangeEvent<HTMLInputElement>;
+  orderStatusValue?: 'complete' | 'incomplete' | 'all';
 }
 
 export interface IErrorFallbackProps {

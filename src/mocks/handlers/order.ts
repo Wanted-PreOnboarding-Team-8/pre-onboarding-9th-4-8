@@ -8,19 +8,29 @@ export const orderListHandlers = [
     const offset = Number(req.url.searchParams.get('offset'));
     const limit = Number(req.url.searchParams.get('limit'));
     const date = req.url.searchParams.get('date');
+    const orderStatus = req.url.searchParams.get('orderStatus');
 
     const dataOfSelectedDate = date
       ? mockData.filter((item) => item.transaction_time.split(' ')[0] === date)
       : mockData;
 
-    const { startDate, endDate } = generateStartAndEndDate(dataOfSelectedDate);
+    const dataOfOrderStatusFiltered =
+      orderStatus === 'complete'
+        ? dataOfSelectedDate.filter((item) => item.status === true)
+        : orderStatus === 'incomplete'
+        ? dataOfSelectedDate.filter((item) => item.status === false)
+        : dataOfSelectedDate;
+
+    const { startDate, endDate } = generateStartAndEndDate(
+      dataOfOrderStatusFiltered,
+    );
 
     return res(
       ctx.json({
-        order: [...dataOfSelectedDate].splice(offset * limit, limit),
+        order: [...dataOfOrderStatusFiltered].splice(offset * limit, limit),
         orderInfo: {
-          totalCount: dataOfSelectedDate.length,
-          totalCurrency: dataOfSelectedDate.reduce(
+          totalCount: dataOfOrderStatusFiltered.length,
+          totalCurrency: dataOfOrderStatusFiltered.reduce(
             (acc, cur) => acc + formatDollarToNumber(cur.currency),
             0,
           ),
