@@ -14,27 +14,19 @@ import {
   Heading,
 } from '@chakra-ui/react';
 import { CheckIcon, WarningIcon } from '@chakra-ui/icons';
-import {
-  IOrderData,
-  IOrderItem,
-  SortOrderType,
-  SortType,
-} from '@/interface/main';
+import { IOrderItem, SortOrderType, SortType } from '@/interface/main';
 import useSetParams from '@/lib/hooks/useSetParams';
 import { formatPageInfo } from '@/lib/utils/formattingHelper';
 import {
   generateDefaultValueOfSort,
   generateSortParams,
 } from '@/lib/utils/generator';
+import { IOrderDataProps } from '@/interface/prop';
 import TablePagination from './TablePagination';
 import TableController from './TableController';
 import SortButton from './SortButton';
 
-type Props = {
-  data: IOrderData;
-};
-
-const OrderTableArea = ({ data }: Props) => {
+const OrderTableArea = ({ data }: IOrderDataProps) => {
   const { currentPage, currentSort, onSetParams } = useSetParams();
 
   const { defaultIdSort, defaultTimeSort } =

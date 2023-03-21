@@ -6,11 +6,9 @@ import {
   InputGroup,
 } from '@chakra-ui/react';
 import React, { useState } from 'react';
+import { SearchBarProps } from '@/interface/prop';
 
-type Props = {
-  onChange: (query: string) => void;
-};
-const SearchBar = ({ onChange }: Props) => {
+const SearchBar = ({ onChange }: SearchBarProps) => {
   const [query, setQuery] = useState<string>('');
 
   const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {

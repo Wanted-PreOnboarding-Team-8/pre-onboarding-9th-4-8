@@ -13,13 +13,10 @@ import { CheckIcon, WarningIcon } from '@chakra-ui/icons';
 import { IoIosPeople } from 'react-icons/io';
 import { TfiMoney } from 'react-icons/tfi';
 import { formatNumToDollar } from '@/lib/utils/formattingHelper';
-import { IOrderData, IOrderItem } from '@/interface/main';
+import { IOrderItem } from '@/interface/main';
+import { IOrderDataProps } from '@/interface/prop';
 
-type Props = {
-  data: IOrderData;
-};
-
-const StatsArea = ({ data }: Props) => {
+const StatsArea = ({ data }: IOrderDataProps) => {
   const stats = [
     {
       label: 'Total Order',

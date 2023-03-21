@@ -2,11 +2,9 @@ import { Button } from '@chakra-ui/react';
 import { useState } from 'react';
 import { ArrowUpIcon, ArrowDownIcon } from '@chakra-ui/icons';
 import { SortOrderType } from '@/interface/main';
-type Props = {
-  defaultValue?: SortOrderType;
-  onClick: (orderBy?: SortOrderType) => void;
-};
-const SortButton = ({ defaultValue, onClick }: Props) => {
+import { SortButtonProps } from '@/interface/prop';
+
+const SortButton = ({ defaultValue, onClick }: SortButtonProps) => {
   const [orderBy, setOrderBy] = useState<SortOrderType | undefined>(
     defaultValue,
   );

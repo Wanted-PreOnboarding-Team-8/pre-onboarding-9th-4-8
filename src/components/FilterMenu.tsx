@@ -7,14 +7,9 @@ import {
   MenuItem,
   MenuList,
 } from '@chakra-ui/react';
+import { IFilterMenuProps } from '@/interface/prop';
 
-type Props = {
-  items: { title: string; value?: string; icon?: React.ReactElement }[];
-  selectedItem?: string;
-  onClickItem: (value?: string) => void;
-};
-
-const FilterMenu = ({ items, selectedItem, onClickItem }: Props) => {
+const FilterMenu = ({ items, selectedItem, onClickItem }: IFilterMenuProps) => {
   return (
     <Menu autoSelect={false}>
       <MenuButton
