@@ -20,11 +20,20 @@ import { formatPageInfo } from '@/lib/utils/formattingHelper';
 import useGetOrderData from '@/lib/hooks/useGetOrderData';
 import DatePicker from './DatePicker';
 import TablePagination from './TablePagination';
-import { TodayOnlyFilter, OrderStatusFilter } from './tableControllers/Filters';
+import {
+  TodayOnlyFilter,
+  OrderStatusFilter,
+  NameSearchFilter,
+} from './tableControllers/Filters';
 
 const OrderTableArea = () => {
-  const { pageNumber, selectedDate, orderStatus } = useParams();
-  const { data } = useGetOrderData(pageNumber, selectedDate, orderStatus);
+  const { pageNumber, selectedDate, orderStatus, searchingName } = useParams();
+  const { data } = useGetOrderData(
+    pageNumber,
+    selectedDate,
+    orderStatus,
+    searchingName,
+  );
 
   return (
     <Box bg="white" w="100%" borderRadius="2xl" p="1em 2em">
@@ -56,7 +65,7 @@ const OrderTableArea = () => {
                 <OrderStatusFilter />
               </Th>
               <Th>
-                <input placeholder="search name" />
+                <NameSearchFilter />
               </Th>
               <Th>sort</Th>
             </Tr>

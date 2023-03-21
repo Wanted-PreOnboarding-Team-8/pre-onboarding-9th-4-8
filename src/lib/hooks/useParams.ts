@@ -6,12 +6,14 @@ const useParams = () => {
   const pageNumber = Number(searchParams.get('page')) || 1;
   const selectedDate = searchParams.get('date');
   const orderStatus = searchParams.get('status');
+  const searchingName = searchParams.get('name');
 
   const onSetParams = ({
     pageValue,
     dateValue,
     dateSelectEvent,
     orderStatusValue,
+    nameValue,
   }: IOnSetParams) => {
     if (pageValue !== undefined) searchParams.set('page', String(pageValue));
     if (dateValue !== undefined) searchParams.set('date', String(dateValue));
@@ -19,12 +21,13 @@ const useParams = () => {
       searchParams.set('date', String(dateSelectEvent.target.value));
     if (orderStatusValue !== undefined)
       searchParams.set('status', orderStatusValue);
+    if (nameValue !== undefined) searchParams.set('name', nameValue);
 
     setSearchParams(searchParams);
     window.scrollTo(0, 0);
   };
 
-  return { pageNumber, selectedDate, orderStatus, onSetParams };
+  return { pageNumber, selectedDate, orderStatus, searchingName, onSetParams };
 };
 
 export default useParams;

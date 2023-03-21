@@ -5,8 +5,14 @@ import { generateZeroToNArr } from '@/lib/utils/generator';
 import useGetOrderData from '@/lib/hooks/useGetOrderData';
 
 const TablePagination = () => {
-  const { pageNumber, selectedDate, orderStatus, onSetParams } = useParams();
-  const { data } = useGetOrderData(pageNumber, selectedDate, orderStatus);
+  const { pageNumber, selectedDate, orderStatus, searchingName, onSetParams } =
+    useParams();
+  const { data } = useGetOrderData(
+    pageNumber,
+    selectedDate,
+    orderStatus,
+    searchingName,
+  );
 
   return (
     <Stack spacing={2} direction="row" align="center">

@@ -19,6 +19,7 @@ export interface IOnSetParams {
   dateValue?: string;
   dateSelectEvent?: React.ChangeEvent<HTMLInputElement>;
   orderStatusValue?: 'complete' | 'incomplete' | 'all';
+  nameValue?: string;
 }
 
 export interface IErrorFallbackProps {
