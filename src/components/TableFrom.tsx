@@ -31,7 +31,7 @@ const TableForm = () => {
     onSetParams({
       pageValue: 1,
       dateValue: '',
-      sortValue: 'DESC',
+      sortValue: 'idASC',
       statusValue: '',
       customerValue: '',
     });

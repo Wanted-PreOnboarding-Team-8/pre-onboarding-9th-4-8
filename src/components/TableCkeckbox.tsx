@@ -46,7 +46,7 @@ const TableCkeckbox = () => {
   };
 
   useEffect(() => {
-    setIsAll(currentStatus === '');
+    setIsAll(currentStatus === '' || currentStatus === null);
     setIsCompletedChecked(currentStatus === 'true');
     setIsInCompletedChecked(currentStatus === 'false');
   }, [currentDate, currentStatus]);

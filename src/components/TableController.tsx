@@ -5,8 +5,13 @@ import { TODAY } from '@/constants/config';
 
 const TableController = () => {
   const { currentDate, onSetParams } = useSetParams();
-  const [allOrderCheck, setAllOrderCheck] = useState(currentDate === '');
-  const [todayOrderCheck, setTodayOrderCheck] = useState(currentDate !== '');
+
+  const dateValue =
+    currentDate && /^(\d{4})-(\d{2})-(\d{2})$/.test(currentDate);
+
+  const [allOrderCheck, setAllOrderCheck] = useState(!dateValue);
+  const [todayOrderCheck, setTodayOrderCheck] = useState(dateValue);
+
   const handleAllOrder = () => {
     onSetParams({ pageValue: 1, dateValue: '' });
     setAllOrderCheck(true);
@@ -20,9 +25,9 @@ const TableController = () => {
   };
 
   useEffect(() => {
-    setAllOrderCheck(currentDate === '');
-    setTodayOrderCheck(currentDate !== '');
-  }, [currentDate]);
+    setAllOrderCheck(!dateValue);
+    setTodayOrderCheck(dateValue);
+  }, [dateValue]);
 
   return (
     <Stack
@@ -50,7 +55,7 @@ const TableController = () => {
         borderWidth={2}
         borderColor="gray.400"
         borderRadius={5}
-        isChecked={todayOrderCheck}
+        isChecked={!!todayOrderCheck}
         onChange={handlTodayOrder}
       >
         오늘의 주문보기
