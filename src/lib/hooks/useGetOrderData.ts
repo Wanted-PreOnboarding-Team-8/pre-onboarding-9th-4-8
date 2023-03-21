@@ -7,11 +7,14 @@ const useGetOrderData = (
   date: string | null,
   sort = 'idAsc',
   status: StatusType | null,
+  query: string | null,
 ) => {
   return useQuery({
-    queryKey: ['/mock/order', pageNum, date, sort, status],
+    queryKey: ['/mock/order', pageNum, date, sort, status, query],
     queryFn: () =>
-      getOrderData(pageNum - 1, date, sort, status).then((res) => res.data),
+      getOrderData(pageNum - 1, date, sort, status, query).then(
+        (res) => res.data,
+      ),
     refetchInterval: 5000,
   });
 };

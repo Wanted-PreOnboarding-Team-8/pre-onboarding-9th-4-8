@@ -9,12 +9,14 @@ const useSetParams = () => {
   const currentDate = searchParams.get(PARAMS.DATE);
   const currentSort = searchParams.getAll(PARAMS.SORT) as SortParamType[];
   const currentStatus = searchParams.get(PARAMS.STATUS) as StatusType;
+  const currentQuery = searchParams.get(PARAMS.QUERY) as StatusType;
 
   const onSetParams = ({
     pageValue,
     dateValue,
     sortValue,
     statusValue,
+    queryValue,
     event,
   }: IOnSetParams) => {
     if (pageValue !== undefined)
@@ -35,6 +37,9 @@ const useSetParams = () => {
     if (statusValue !== undefined) {
       searchParams.set(PARAMS.STATUS, String(statusValue));
     }
+    if (queryValue !== undefined) {
+      searchParams.set(PARAMS.QUERY, String(queryValue));
+    }
     if (event) searchParams.set(PARAMS.DATE, String(event.target.value));
 
     setSearchParams(searchParams);
@@ -46,6 +51,7 @@ const useSetParams = () => {
     currentDate,
     currentSort: currentSort.join(),
     currentStatus,
+    currentQuery,
     onSetParams,
   };
 };

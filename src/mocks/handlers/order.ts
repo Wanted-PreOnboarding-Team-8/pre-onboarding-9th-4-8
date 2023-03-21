@@ -7,6 +7,7 @@ import {
 import { IOrderItem, SortParamType, StatusType } from '@/interface/main';
 import {
   filterByDate,
+  filterByQuery,
   filterByStatus,
   sortByDateTime,
   sortById,
@@ -20,6 +21,7 @@ export const orderListHandlers = [
     const date = req.url.searchParams.get('date');
     const sort = req.url.searchParams.get('sort');
     const status = req.url.searchParams.get('status') as StatusType;
+    const query = req.url.searchParams.get('query') as StatusType;
 
     let orderList: IOrderItem[] = mockData;
 
@@ -38,6 +40,8 @@ export const orderListHandlers = [
         orderList,
         status === 'complete' ? true : false,
       );
+
+    if (query) orderList = filterByQuery(orderList, query);
 
     const { startDate, endDate } = generateStartAndEndDate(orderList);
 

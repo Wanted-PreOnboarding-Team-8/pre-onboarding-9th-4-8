@@ -28,15 +28,23 @@ import TablePagination from './TablePagination';
 import TableController from './TableController';
 import SortButton from './SortButton';
 import StatusFilterButton from './StatusFilterButton';
+import SearchBar from './SearchBar';
 
 const OrderTableArea = () => {
-  const { currentPage, currentDate, currentSort, currentStatus, onSetParams } =
-    useSetParams();
+  const {
+    currentPage,
+    currentDate,
+    currentSort,
+    currentStatus,
+    currentQuery,
+    onSetParams,
+  } = useSetParams();
   const orderData = useGetOrderData(
     currentPage,
     currentDate,
     currentSort,
     currentStatus,
+    currentQuery,
   ).data as IOrderData;
 
   const onClickSortButton = (sortBy: SortType, orderBy?: SortOrderType) => {
@@ -84,7 +92,16 @@ const OrderTableArea = () => {
                   }}
                 />
               </Th>
-              <Th>Customer Name / ID</Th>
+              <Th>
+                Customer Name / ID{' '}
+                <SearchBar
+                  onChange={(query: string) =>
+                    onSetParams({
+                      queryValue: query,
+                    })
+                  }
+                />
+              </Th>
               <Th>
                 Time{' '}
                 <SortButton

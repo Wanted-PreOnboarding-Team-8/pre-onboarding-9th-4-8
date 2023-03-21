@@ -3,4 +3,5 @@ export const PARAMS = {
   DATE: 'date',
   SORT: 'sort',
   STATUS: 'status',
+  QUERY: 'q',
 };

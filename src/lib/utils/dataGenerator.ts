@@ -14,6 +14,12 @@ export const filterByStatus = (
   return data.filter((item) => item.status === status);
 };
 
+export const filterByQuery = (data: IOrderItem[], query: string) => {
+  return data.filter((item) =>
+    item.customer_name.match(new RegExp(query, 'i')),
+  );
+};
+
 export const sortById = (
   data: IOrderItem[],
   orderBy: SortOrderType,
