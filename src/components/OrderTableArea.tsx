@@ -22,8 +22,26 @@ import TablePagination from './TablePagination';
 import TableController from './TableController';
 
 const OrderTableArea = () => {
-  const { currentPage, currentDate } = useSetParams();
-  const { data } = useGetOrderData(currentPage, currentDate);
+  const { currentPage, currentDate, currentSort, onSetParams } = useSetParams();
+  const { data } = useGetOrderData(currentPage, currentDate, currentSort);
+
+  const handleOrderId = () => {
+    const sortValue = currentSort === 'idDESC' ? 'idASC' : 'idDESC';
+    onSetParams({
+      pageValue: 1,
+      dateValue: `${currentDate || ''}`,
+      sortValue,
+    });
+  };
+
+  const handleTime = () => {
+    const sortValue = currentSort === 'timeDESC' ? 'timeASC' : 'timeDESC';
+    onSetParams({
+      pageValue: 1,
+      dateValue: `${currentDate || ''}`,
+      sortValue,
+    });
+  };
 
   return (
     <Box bg="white" w="100%" borderRadius="2xl" p="1em 2em">
@@ -45,10 +63,10 @@ const OrderTableArea = () => {
           </TableCaption>
           <Thead>
             <Tr>
-              <Th>Order ID</Th>
+              <Th onClick={handleOrderId}>Order ID</Th>
               <Th>Status</Th>
               <Th>Customer Name / ID</Th>
-              <Th>Time</Th>
+              <Th onClick={handleTime}>Time</Th>
               <Th>Currency</Th>
             </Tr>
           </Thead>
