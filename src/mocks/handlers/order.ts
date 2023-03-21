@@ -38,19 +38,30 @@ export const orderListHandlers = [
 
     const { startDate, endDate } = generateStartAndEndDate(dataOfSelectedDate);
 
-    return res(
-      ctx.json({
-        order: [...dataOfSelectedDate].splice(offset * limit, limit),
-        orderInfo: {
-          totalCount: dataOfSelectedDate.length,
-          totalCurrency: dataOfSelectedDate.reduce(
-            (acc, cur) => acc + formatDollarToNumber(cur.currency),
-            0,
-          ),
-          startDate,
-          endDate,
-        },
-      }),
-    );
+    const order =
+      dataOfSelectedDate.length !== 0
+        ? [...dataOfSelectedDate].splice(offset * limit, limit)
+        : [];
+
+    const orderInfo =
+      dataOfSelectedDate.length !== 0
+        ? {
+            totalCount: dataOfSelectedDate.length,
+            totalCurrency: dataOfSelectedDate.reduce(
+              (acc, cur) => acc + formatDollarToNumber(cur.currency),
+              0,
+            ),
+            startDate,
+            endDate,
+          }
+        : {
+            totalCount: 0,
+            totalCurrency: 0,
+            startDate: 0,
+            endDate: 0,
+            message: '필터된 데이터가 없습니다.',
+          };
+
+    return res(ctx.json({ order, orderInfo }));
   }),
 ];

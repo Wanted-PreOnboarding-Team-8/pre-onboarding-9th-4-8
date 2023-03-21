@@ -4,23 +4,22 @@ import {
   Tbody,
   Tr,
   Th,
-  Td,
   TableCaption,
   TableContainer,
-  Icon,
   Box,
   Spacer,
   Flex,
   Heading,
+  Td,
 } from '@chakra-ui/react';
-import { CheckIcon, WarningIcon } from '@chakra-ui/icons';
-import { IFetchData, IOrderItem } from '@/interface/main';
+import { IFetchData } from '@/interface/main';
 import useSetParams from '@/lib/hooks/useSetParams';
 import { formatPageInfo } from '@/lib/utils/formattingHelper';
 import TablePagination from './TablePagination';
 import TableController from './TableController';
 import TableCkeckbox from './TableCkeckbox';
 import TableForm from './TableFrom';
+import TableContent from './TableContent';
 
 const OrderTableArea = ({ order, orderInfo }: IFetchData) => {
   const { currentPage, currentDate, currentSort, onSetParams } = useSetParams();
@@ -69,31 +68,17 @@ const OrderTableArea = ({ order, orderInfo }: IFetchData) => {
             </Tr>
           </Thead>
           <Tbody>
-            {order.map((orderItem: IOrderItem) => {
-              return (
-                <Tr key={orderItem.id}>
-                  <Td>{orderItem.id}</Td>
-                  <Td>
-                    {orderItem.status ? (
-                      <Flex gap={1}>
-                        <Icon as={CheckIcon} w={5} h={5} color="green.500" />
-                        Complete
-                      </Flex>
-                    ) : (
-                      <Flex gap={1}>
-                        <Icon as={WarningIcon} w={5} h={5} color="orange.500" />
-                        Incomplete
-                      </Flex>
-                    )}
-                  </Td>
-                  <Td>
-                    {orderItem.customer_name} / {orderItem.customer_id}
-                  </Td>
-                  <Td>{orderItem.transaction_time}</Td>
-                  <Td>{orderItem.currency}</Td>
-                </Tr>
-              );
-            })}
+            {order.length === 0 ? (
+              <Tr>
+                <Td>{orderInfo.message}</Td>
+              </Tr>
+            ) : (
+              order.map((orderItem) => {
+                return (
+                  <TableContent orderItem={orderItem} key={orderItem.id} />
+                );
+              })
+            )}
           </Tbody>
         </Table>
       </TableContainer>

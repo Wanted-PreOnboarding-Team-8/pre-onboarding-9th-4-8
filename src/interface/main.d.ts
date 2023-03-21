@@ -12,6 +12,7 @@ export interface IOrderInfo {
   startDate: string;
   totalCount: number;
   totalCurrency: number;
+  message?: string;
 }
 
 export interface IFetchData {
