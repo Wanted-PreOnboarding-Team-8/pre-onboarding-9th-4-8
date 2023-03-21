@@ -15,8 +15,9 @@ export interface IOrderInfo {
 }
 
 export interface IOnSetParams {
-  pageValue?: number;
+  pageValue?: number | string;
   dateValue?: string;
+  sortValue?: string;
   event?: React.ChangeEvent<HTMLInputElement>;
 }
 
