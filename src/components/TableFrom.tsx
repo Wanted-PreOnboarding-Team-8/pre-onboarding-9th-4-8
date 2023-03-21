@@ -19,13 +19,23 @@ const TableForm = () => {
       onSetParams({
         pageValue: 1,
         dateValue: '',
-        statusValue: 'all',
+        statusValue: '',
         customerValue: `${search}`,
       });
       setSearch('');
     },
     [onSetParams, search],
   );
+
+  const onClickReset = useCallback(() => {
+    onSetParams({
+      pageValue: 1,
+      dateValue: '',
+      sortValue: 'DESC',
+      statusValue: '',
+      customerValue: '',
+    });
+  }, [onSetParams]);
 
   return (
     <form onSubmit={onSubmitForm}>
@@ -40,8 +50,11 @@ const TableForm = () => {
             width="auto"
             me={2}
           />
-          <Button type="submit">
+          <Button type="submit" me={2}>
             <FaSearch />
+          </Button>
+          <Button colorScheme="red" variant="outline" onClick={onClickReset}>
+            필터초기화
           </Button>
         </Center>
       </FormControl>
