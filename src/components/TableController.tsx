@@ -1,27 +1,58 @@
-import { Button, ButtonGroup } from '@chakra-ui/react';
+import { useState } from 'react';
+import { Checkbox, Stack } from '@chakra-ui/react';
 import useSetParams from '@/lib/hooks/useSetParams';
 import { TODAY } from '@/constants/config';
 
 const TableController = () => {
-  const { onSetParams } = useSetParams();
+  const { currentDate, onSetParams } = useSetParams();
+
+  const [allOrderCheck, setAllOrderCheck] = useState(currentDate === '');
+  const [todayOrderCheck, setTodayOrderCheck] = useState(currentDate !== '');
+
+  const handleAllOrder = () => {
+    onSetParams({ pageValue: 1, dateValue: '' });
+    setAllOrderCheck(true);
+    setTodayOrderCheck(false);
+  };
+
+  const handlTodayOrder = () => {
+    onSetParams({ pageValue: 1, dateValue: TODAY });
+    setTodayOrderCheck(true);
+    setAllOrderCheck(false);
+  };
 
   return (
-    <ButtonGroup variant="outline" spacing="4">
-      <Button
-        colorScheme="blue"
-        size="sm"
-        onClick={() => onSetParams({ pageValue: 1, dateValue: '' })}
+    <Stack
+      direction={['column', 'row']}
+      spacing={[1, 5]}
+      justify="center"
+      p={5}
+    >
+      <Checkbox
+        size="lg"
+        colorScheme="green"
+        p={1}
+        borderWidth={2}
+        borderColor="gray.400"
+        borderRadius={5}
+        isChecked={allOrderCheck}
+        onChange={handleAllOrder}
       >
         전체 주문보기
-      </Button>
-      <Button
-        colorScheme="blue"
-        size="sm"
-        onClick={() => onSetParams({ pageValue: 1, dateValue: TODAY })}
+      </Checkbox>
+      <Checkbox
+        size="lg"
+        colorScheme="green"
+        p={1}
+        borderWidth={2}
+        borderColor="gray.400"
+        borderRadius={5}
+        isChecked={todayOrderCheck}
+        onChange={handlTodayOrder}
       >
         오늘의 주문보기
-      </Button>
-    </ButtonGroup>
+      </Checkbox>
+    </Stack>
   );
 };
 

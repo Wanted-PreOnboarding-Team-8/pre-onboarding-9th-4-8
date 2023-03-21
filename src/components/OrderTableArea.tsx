@@ -57,8 +57,8 @@ const OrderTableArea = () => {
           <Heading size="md">주문 테이블</Heading>
         </Box>
         <Spacer />
-        <TableController />
       </Flex>
+      <TableController />
       <TableCkeckbox />
       <TableContainer>
         <Table variant="simple">
