@@ -21,15 +21,23 @@ import useGetOrderData from '@/lib/hooks/useGetOrderData';
 import TablePagination from './TablePagination';
 import TableController from './TableController';
 import TableCkeckbox from './TableCkeckbox';
+import TableForm from './TableFrom';
 
 const OrderTableArea = () => {
-  const { currentPage, currentDate, currentSort, currentStatus, onSetParams } =
-    useSetParams();
+  const {
+    currentPage,
+    currentDate,
+    currentSort,
+    currentStatus,
+    currentCustomer,
+    onSetParams,
+  } = useSetParams();
   const { data } = useGetOrderData(
     currentPage,
     currentDate,
     currentSort,
     currentStatus,
+    currentCustomer,
   );
 
   const handleOrderId = () => {
@@ -60,6 +68,7 @@ const OrderTableArea = () => {
       </Flex>
       <TableController />
       <TableCkeckbox />
+      <TableForm />
       <TableContainer>
         <Table variant="simple">
           <TableCaption>

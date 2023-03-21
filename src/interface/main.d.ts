@@ -19,6 +19,7 @@ export interface IOnSetParams {
   dateValue?: string;
   sortValue?: string;
   statusValue?: string;
+  customerValue?: string;
   event?: React.ChangeEvent<HTMLInputElement>;
 }
 

@@ -27,3 +27,7 @@ export const filterStatus = (data: IOrderItem[], status: string) => {
 export const filterDate = (data: IOrderItem[], date: string) => {
   return data.filter((item) => item.transaction_time.split(' ')[0] === date);
 };
+
+export const filterCustomer = (data: IOrderItem[], customer: string) => {
+  return data.filter((item) => item.customer_name === customer);
+};
