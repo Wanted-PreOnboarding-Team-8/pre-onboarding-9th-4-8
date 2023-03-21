@@ -69,7 +69,14 @@ const OrderTableArea = () => {
               </Th>
               <Th>Status</Th>
               <Th>Customer Name / ID</Th>
-              <Th>Time</Th>
+              <Th>
+                Time{' '}
+                <SortButton
+                  onClick={(orderBy?: SortOrderType) =>
+                    onClickSortButton('transactionTime', orderBy)
+                  }
+                />
+              </Th>
               <Th>Currency</Th>
             </Tr>
           </Thead>

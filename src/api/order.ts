@@ -5,7 +5,7 @@ import apiClient from './apiClient';
 export const getOrderData = async (
   offset: number,
   date: string | null,
-  sort: SortParamType,
+  sort: string,
 ) => {
   return await apiClient({
     method: 'get',

@@ -5,7 +5,11 @@ import {
   generateStartAndEndDate,
 } from '@/lib/utils/generator';
 import { IOrderItem, SortParamType } from '@/interface/main';
-import { filterByDate, sortById } from '@/lib/utils/dataGenerator';
+import {
+  filterByDate,
+  sortByDateTime,
+  sortById,
+} from '@/lib/utils/dataGenerator';
 import mockData from '../storage/mock_data.json';
 
 export const orderListHandlers = [
@@ -13,15 +17,20 @@ export const orderListHandlers = [
     const offset = Number(req.url.searchParams.get('offset'));
     const limit = Number(req.url.searchParams.get('limit'));
     const date = req.url.searchParams.get('date');
-    const sort = req.url.searchParams.get('sort') as SortParamType;
+    const sort = req.url.searchParams.get('sort');
 
     let orderList: IOrderItem[] = mockData;
 
     orderList = date ? filterByDate(orderList, date) : orderList;
 
-    const { sortBy, orderBy } = generateSortQuery(sort);
-
-    if (sortBy === 'id') orderList = sortById(orderList, orderBy);
+    const sorts = sort ? sort.split(',') : ['idAsc'];
+    console.log(sorts);
+    sorts.forEach((s) => {
+      const { sortBy, orderBy } = generateSortQuery(s as SortParamType);
+      if (sortBy === 'id') orderList = sortById(orderList, orderBy);
+      if (sortBy === 'transactionTime')
+        orderList = sortByDateTime(orderList, orderBy);
+    });
 
     const { startDate, endDate } = generateStartAndEndDate(orderList);
 

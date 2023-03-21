@@ -14,3 +14,17 @@ export const sortById = (
   data.sort((a, b) => (orderBy === 'Asc' ? a.id - b.id : b.id - a.id));
   return data;
 };
+
+export const sortByDateTime = (
+  data: IOrderItem[],
+  orderBy: SortOrderType,
+): IOrderItem[] => {
+  data.sort((a, b) =>
+    orderBy === 'Asc'
+      ? new Date(a.transaction_time).getTime() -
+        new Date(b.transaction_time).getTime()
+      : new Date(b.transaction_time).getTime() -
+        new Date(a.transaction_time).getTime(),
+  );
+  return data;
+};

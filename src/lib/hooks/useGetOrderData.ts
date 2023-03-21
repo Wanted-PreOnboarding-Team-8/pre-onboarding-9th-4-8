@@ -1,12 +1,7 @@
 import { useQuery } from '@tanstack/react-query';
 import { getOrderData } from '@/api/order';
-import { SortParamType } from '@/interface/main';
 
-const useGetOrderData = (
-  pageNum = 1,
-  date: string | null,
-  sort: SortParamType = 'idAsc',
-) => {
+const useGetOrderData = (pageNum = 1, date: string | null, sort = 'idAsc') => {
   return useQuery({
     queryKey: ['/mock/order', pageNum, date, sort],
     queryFn: () =>
