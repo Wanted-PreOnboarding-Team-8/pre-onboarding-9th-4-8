@@ -6,7 +6,7 @@ export const getOrderData = async (
   offset: number,
   date: string | null,
   sort: string,
-  status: StatusType | null,
+  status: StatusType | undefined,
   query: string | null,
 ) => {
   return await apiClient({

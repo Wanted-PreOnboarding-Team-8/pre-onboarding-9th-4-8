@@ -6,7 +6,7 @@ const useGetOrderData = (
   pageNum = 1,
   date: string | null,
   sort = 'idAsc',
-  status: StatusType | null,
+  status: StatusType | undefined,
   query: string | null,
 ) => {
   return useQuery({

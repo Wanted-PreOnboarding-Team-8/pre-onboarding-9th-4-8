@@ -21,7 +21,12 @@ const SortButton = ({ defaultValue, onClick }: Props) => {
   };
 
   return (
-    <Button onClick={onSwitchArrow}>
+    <Button
+      onClick={onSwitchArrow}
+      background="none"
+      _hover={{ background: 'gray.100' }}
+      p={0}
+    >
       <ArrowUpIcon color={orderBy === 'Asc' ? 'orange.500' : 'gray.400'} />
       <ArrowDownIcon color={orderBy === 'Desc' ? 'orange.500' : 'gray.400'} />
     </Button>

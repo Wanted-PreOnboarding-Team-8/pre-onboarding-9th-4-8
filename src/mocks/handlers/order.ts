@@ -25,7 +25,11 @@ export const orderListHandlers = [
 
     let orderList: IOrderItem[] = mockData;
 
-    orderList = date ? filterByDate(orderList, date) : orderList;
+    console.log(date);
+    orderList =
+      date !== 'all' && date !== null
+        ? filterByDate(orderList, date)
+        : orderList;
 
     const sorts = sort ? sort.split(',') : ['idAsc'];
     sorts.forEach((s) => {

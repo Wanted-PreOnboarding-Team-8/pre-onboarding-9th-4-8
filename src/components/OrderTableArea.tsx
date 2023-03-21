@@ -19,7 +19,6 @@ import {
   IOrderData,
   SortOrderType,
   SortType,
-  StatusType,
 } from '@/interface/main';
 import useSetParams from '@/lib/hooks/useSetParams';
 import { formatPageInfo } from '@/lib/utils/formattingHelper';
@@ -27,8 +26,6 @@ import useGetOrderData from '@/lib/hooks/useGetOrderData';
 import TablePagination from './TablePagination';
 import TableController from './TableController';
 import SortButton from './SortButton';
-import StatusFilterButton from './StatusFilterButton';
-import SearchBar from './SearchBar';
 
 const OrderTableArea = () => {
   const {
@@ -82,26 +79,8 @@ const OrderTableArea = () => {
                   }
                 />
               </Th>
-              <Th>
-                Status{' '}
-                <StatusFilterButton
-                  onChange={(value: StatusType) => {
-                    onSetParams({
-                      statusValue: value,
-                    });
-                  }}
-                />
-              </Th>
-              <Th>
-                Customer Name / ID{' '}
-                <SearchBar
-                  onChange={(query: string) =>
-                    onSetParams({
-                      queryValue: query,
-                    })
-                  }
-                />
-              </Th>
+              <Th>Status </Th>
+              <Th>Customer Name / ID </Th>
               <Th>
                 Time{' '}
                 <SortButton

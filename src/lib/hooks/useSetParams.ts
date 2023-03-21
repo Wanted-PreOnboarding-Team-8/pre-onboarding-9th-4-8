@@ -1,14 +1,17 @@
 import { useSearchParams } from 'react-router-dom';
 import { IOnSetParams, SortParamType, StatusType } from '@/interface/main';
 import { PARAMS } from '@/constants/param';
+import { TODAY } from '@/constants/config';
 import { generateSortQuery } from '../utils/generator';
 
 const useSetParams = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   const currentPage = Number(searchParams.get(PARAMS.PAGE)) || 1;
-  const currentDate = searchParams.get(PARAMS.DATE);
+  const currentDate = searchParams.get(PARAMS.DATE) || TODAY;
   const currentSort = searchParams.getAll(PARAMS.SORT) as SortParamType[];
-  const currentStatus = searchParams.get(PARAMS.STATUS) as StatusType;
+  const currentStatus = searchParams.get(PARAMS.STATUS) as
+    | StatusType
+    | undefined;
   const currentQuery = searchParams.get(PARAMS.QUERY) as StatusType;
 
   const onSetParams = ({
@@ -21,6 +24,8 @@ const useSetParams = () => {
   }: IOnSetParams) => {
     if (pageValue !== undefined)
       searchParams.set(PARAMS.PAGE, String(pageValue));
+
+    console.log(currentDate);
     if (dateValue !== undefined)
       searchParams.set(PARAMS.DATE, String(dateValue));
     if (sortValue !== undefined) {
@@ -34,7 +39,9 @@ const useSetParams = () => {
         searchParams.append(PARAMS.SORT, sortValue);
       }
     }
-    if (statusValue !== undefined) {
+    if (statusValue === undefined) {
+      searchParams.delete(PARAMS.STATUS);
+    } else {
       searchParams.set(PARAMS.STATUS, String(statusValue));
     }
     if (queryValue !== undefined) {
