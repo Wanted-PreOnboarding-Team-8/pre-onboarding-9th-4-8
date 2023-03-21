@@ -4,7 +4,7 @@ import { ArrowUpIcon, ArrowDownIcon } from '@chakra-ui/icons';
 import { SortOrderType } from '@/interface/main';
 type Props = {
   defaultValue?: SortOrderType;
-  onClick: (orderBy: SortOrderType) => void;
+  onClick: (orderBy?: SortOrderType) => void;
 };
 const SortButton = ({ defaultValue, onClick }: Props) => {
   const [orderBy, setOrderBy] = useState<SortOrderType | undefined>(
@@ -15,7 +15,8 @@ const SortButton = ({ defaultValue, onClick }: Props) => {
     e: React.MouseEvent<HTMLButtonElement, MouseEvent>,
   ) => {
     e.preventDefault();
-    const switched = orderBy === 'Asc' ? 'Desc' : 'Asc';
+    const switched =
+      orderBy === 'Asc' ? 'Desc' : orderBy === 'Desc' ? undefined : 'Asc';
     onClick(switched);
     setOrderBy(switched);
   };

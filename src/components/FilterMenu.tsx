@@ -31,7 +31,7 @@ const FilterMenu = ({ items, selectedItem, onClickItem }: Props) => {
       <MenuList>
         {items.map((item) => (
           <MenuItem
-            key={item.value}
+            key={item.title}
             value={item.value}
             onClick={() => onClickItem(item.value)}
           >

@@ -15,38 +15,38 @@ import {
 } from '@chakra-ui/react';
 import { CheckIcon, WarningIcon } from '@chakra-ui/icons';
 import {
-  IOrderItem,
   IOrderData,
+  IOrderItem,
   SortOrderType,
   SortType,
 } from '@/interface/main';
 import useSetParams from '@/lib/hooks/useSetParams';
 import { formatPageInfo } from '@/lib/utils/formattingHelper';
-import useGetOrderData from '@/lib/hooks/useGetOrderData';
+import {
+  generateDefaultValueOfSort,
+  generateSortParams,
+} from '@/lib/utils/generator';
 import TablePagination from './TablePagination';
 import TableController from './TableController';
 import SortButton from './SortButton';
 
-const OrderTableArea = () => {
-  const {
-    currentPage,
-    currentDate,
-    currentSort,
-    currentStatus,
-    currentQuery,
-    onSetParams,
-  } = useSetParams();
-  const orderData = useGetOrderData(
-    currentPage,
-    currentDate,
-    currentSort,
-    currentStatus,
-    currentQuery,
-  ).data as IOrderData;
+type Props = {
+  data: IOrderData;
+};
+
+const OrderTableArea = ({ data }: Props) => {
+  const { currentPage, currentSort, onSetParams } = useSetParams();
+
+  const { defaultIdSort, defaultTimeSort } =
+    generateDefaultValueOfSort(currentSort);
 
   const onClickSortButton = (sortBy: SortType, orderBy?: SortOrderType) => {
     onSetParams({
-      sortValue: orderBy ? `${sortBy}${orderBy}` : undefined,
+      sortValue: generateSortParams(
+        currentSort,
+        sortBy,
+        orderBy ? `${sortBy}${orderBy}` : undefined,
+      ),
     });
   };
 
@@ -64,8 +64,8 @@ const OrderTableArea = () => {
           <TableCaption>
             {formatPageInfo(
               currentPage,
-              orderData.order.length,
-              orderData.orderInfo.totalCount,
+              data.order.length,
+              data.orderInfo.totalCount,
             )}
           </TableCaption>
           <Thead>
@@ -73,7 +73,7 @@ const OrderTableArea = () => {
               <Th>
                 Order ID{' '}
                 <SortButton
-                  defaultValue="Asc"
+                  defaultValue={defaultIdSort}
                   onClick={(orderBy?: SortOrderType) =>
                     onClickSortButton('id', orderBy)
                   }
@@ -84,6 +84,7 @@ const OrderTableArea = () => {
               <Th>
                 Time{' '}
                 <SortButton
+                  defaultValue={defaultTimeSort}
                   onClick={(orderBy?: SortOrderType) =>
                     onClickSortButton('transactionTime', orderBy)
                   }
@@ -93,7 +94,7 @@ const OrderTableArea = () => {
             </Tr>
           </Thead>
           <Tbody>
-            {orderData.order.map((orderItem: IOrderItem) => {
+            {data.order.map((orderItem: IOrderItem) => {
               return (
                 <Tr key={orderItem.id}>
                   <Td>{orderItem.id}</Td>
@@ -121,7 +122,7 @@ const OrderTableArea = () => {
           </Tbody>
         </Table>
       </TableContainer>
-      <TablePagination />
+      <TablePagination data={data} />
     </Box>
   );
 };

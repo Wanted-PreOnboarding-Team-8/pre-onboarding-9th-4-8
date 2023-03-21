@@ -17,7 +17,7 @@ export interface IOrderInfo {
 export interface IOnSetParams {
   pageValue?: number;
   dateValue?: string;
-  sortValue?: SortParamType;
+  sortValue?: SortValueType;
   statusValue?: StatusType;
   queryValue?: string;
   event?: React.ChangeEvent<HTMLInputElement>;
@@ -31,7 +31,10 @@ export interface IOrderData {
   order: IOrderItem[];
   orderInfo: IOrderInfo;
 }
-
+export type SortValueType = {
+  id: SortParamType | undefined;
+  transactionTime: SortParamType | undefined;
+};
 export type SortType = 'id' | 'transactionTime';
 export type SortOrderType = 'Asc' | 'Desc';
 export type SortParamType = `${SortType}${SortOrderType}`;

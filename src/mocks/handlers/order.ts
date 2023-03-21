@@ -1,7 +1,7 @@
 import { rest } from 'msw';
 import { formatDollarToNumber } from '@/lib/utils/formattingHelper';
 import {
-  generateSortQuery,
+  generateSortInfo,
   generateStartAndEndDate,
 } from '@/lib/utils/generator';
 import { IOrderItem, SortParamType, StatusType } from '@/interface/main';
@@ -33,7 +33,7 @@ export const orderListHandlers = [
 
     const sorts = sort ? sort.split(',') : ['idAsc'];
     sorts.forEach((s) => {
-      const { sortBy, orderBy } = generateSortQuery(s as SortParamType);
+      const { sortBy, orderBy } = generateSortInfo(s as SortParamType);
       if (sortBy === 'id') orderList = sortById(orderList, orderBy);
       if (sortBy === 'transactionTime')
         orderList = sortByDateTime(orderList, orderBy);

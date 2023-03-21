@@ -5,7 +5,7 @@ import { StatusType } from '@/interface/main';
 const useGetOrderData = (
   pageNum = 1,
   date: string | null,
-  sort = 'idAsc',
+  sort: string,
   status: StatusType | undefined,
   query: string | null,
 ) => {
