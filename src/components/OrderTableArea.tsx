@@ -14,16 +14,29 @@ import {
   Heading,
 } from '@chakra-ui/react';
 import { CheckIcon, WarningIcon } from '@chakra-ui/icons';
-import { IOrderItem } from '@/interface/main';
+import {
+  IOrderItem,
+  IOrderData,
+  SortOrderType,
+  SortType,
+} from '@/interface/main';
 import useSetParams from '@/lib/hooks/useSetParams';
 import { formatPageInfo } from '@/lib/utils/formattingHelper';
 import useGetOrderData from '@/lib/hooks/useGetOrderData';
 import TablePagination from './TablePagination';
 import TableController from './TableController';
+import SortButton from './SortButton';
 
 const OrderTableArea = () => {
-  const { currentPage, currentDate } = useSetParams();
-  const { data } = useGetOrderData(currentPage, currentDate);
+  const { currentPage, currentDate, currentSort, onSetParams } = useSetParams();
+  const orderData = useGetOrderData(currentPage, currentDate, currentSort)
+    .data as IOrderData;
+
+  const onClickSortButton = (sortBy: SortType, orderBy?: SortOrderType) => {
+    onSetParams({
+      sortValue: orderBy ? `${sortBy}${orderBy}` : undefined,
+    });
+  };
 
   return (
     <Box bg="white" w="100%" borderRadius="2xl" p="1em 2em">
@@ -39,13 +52,21 @@ const OrderTableArea = () => {
           <TableCaption>
             {formatPageInfo(
               currentPage,
-              data.order.length,
-              data.orderInfo.totalCount,
+              orderData.order.length,
+              orderData.orderInfo.totalCount,
             )}
           </TableCaption>
           <Thead>
             <Tr>
-              <Th>Order ID</Th>
+              <Th>
+                Order ID{' '}
+                <SortButton
+                  defaultValue="Asc"
+                  onClick={(orderBy?: SortOrderType) =>
+                    onClickSortButton('id', orderBy)
+                  }
+                />
+              </Th>
               <Th>Status</Th>
               <Th>Customer Name / ID</Th>
               <Th>Time</Th>
@@ -53,7 +74,7 @@ const OrderTableArea = () => {
             </Tr>
           </Thead>
           <Tbody>
-            {data.order.map((orderItem: IOrderItem) => {
+            {orderData.order.map((orderItem: IOrderItem) => {
               return (
                 <Tr key={orderItem.id}>
                   <Td>{orderItem.id}</Td>
