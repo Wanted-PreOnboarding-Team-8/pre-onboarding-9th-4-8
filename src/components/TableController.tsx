@@ -1,14 +1,12 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Checkbox, Stack } from '@chakra-ui/react';
 import useSetParams from '@/lib/hooks/useSetParams';
 import { TODAY } from '@/constants/config';
 
 const TableController = () => {
   const { currentDate, onSetParams } = useSetParams();
-
   const [allOrderCheck, setAllOrderCheck] = useState(currentDate === '');
   const [todayOrderCheck, setTodayOrderCheck] = useState(currentDate !== '');
-
   const handleAllOrder = () => {
     onSetParams({ pageValue: 1, dateValue: '' });
     setAllOrderCheck(true);
@@ -20,6 +18,11 @@ const TableController = () => {
     setTodayOrderCheck(true);
     setAllOrderCheck(false);
   };
+
+  useEffect(() => {
+    setAllOrderCheck(currentDate === '');
+    setTodayOrderCheck(currentDate !== '');
+  }, [currentDate]);
 
   return (
     <Stack

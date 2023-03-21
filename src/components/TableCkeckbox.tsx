@@ -1,12 +1,16 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Checkbox, Stack } from '@chakra-ui/react';
 import useSetParams from '@/lib/hooks/useSetParams';
 
 const TableCkeckbox = () => {
-  const { currentDate, onSetParams } = useSetParams();
-  const [isAll, setIsAll] = useState(true);
-  const [isCompletedChecked, setIsCompletedChecked] = useState(false);
-  const [isInCompletedChecked, setIsInCompletedChecked] = useState(false);
+  const { currentStatus, currentDate, onSetParams } = useSetParams();
+  const [isAll, setIsAll] = useState(currentStatus === '');
+  const [isCompletedChecked, setIsCompletedChecked] = useState(
+    currentStatus === 'true',
+  );
+  const [isInCompletedChecked, setIsInCompletedChecked] = useState(
+    currentStatus === 'fasle',
+  );
 
   const handleComplete = () => {
     onSetParams({
@@ -34,12 +38,18 @@ const TableCkeckbox = () => {
     onSetParams({
       pageValue: 1,
       dateValue: `${currentDate || ''}`,
-      statusValue: 'all',
+      statusValue: '',
     });
     setIsAll(true);
     setIsCompletedChecked(false);
     setIsInCompletedChecked(false);
   };
+
+  useEffect(() => {
+    setIsAll(currentStatus === '');
+    setIsCompletedChecked(currentStatus === 'true');
+    setIsInCompletedChecked(currentStatus === 'false');
+  }, [currentDate, currentStatus]);
 
   return (
     <Stack

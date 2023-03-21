@@ -22,13 +22,13 @@ import TableForm from './TableFrom';
 import TableContent from './TableContent';
 
 const OrderTableArea = ({ order, orderInfo }: IFetchData) => {
-  const { currentPage, currentDate, currentSort, onSetParams } = useSetParams();
+  const { currentPage, currentSort, onSetParams } = useSetParams();
 
   const handleOrderId = () => {
     const sortValue = currentSort === 'idDESC' ? 'idASC' : 'idDESC';
     onSetParams({
       pageValue: 1,
-      dateValue: `${currentDate || ''}`,
+      dateValue: '',
       sortValue,
     });
   };
@@ -37,7 +37,7 @@ const OrderTableArea = ({ order, orderInfo }: IFetchData) => {
     const sortValue = currentSort === 'timeDESC' ? 'timeASC' : 'timeDESC';
     onSetParams({
       pageValue: 1,
-      dateValue: `${currentDate || ''}`,
+      dateValue: '',
       sortValue,
     });
   };
