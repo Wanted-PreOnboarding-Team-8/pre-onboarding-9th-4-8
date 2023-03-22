@@ -35,7 +35,10 @@ GET http://localhost:3000/mock/order
 params: {
     offset: 0,
     limit: 50,
-    date: '2023-03-08'
+    date: '2023-03-08',
+    customer: '',
+    filter: '',
+    sort: ''
 }
 
 # Response 200 OK
@@ -59,7 +62,7 @@ params: {
             "currency": "$50.25"
         }
     ],
-    "orderCount": {
+    "orderInfo": {
         endDate: "2023-3-8",
         startDate: "2023-3-8",
         totalCount: 267,
