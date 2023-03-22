@@ -14,6 +14,7 @@ import {
   Heading,
 } from '@chakra-ui/react';
 import { CheckIcon, WarningIcon } from '@chakra-ui/icons';
+import { useState } from 'react';
 import { IOrderItem } from '@/interface/main';
 import useParams from '@/lib/hooks/useParams';
 import { formatPageInfo } from '@/lib/utils/formattingHelper';
@@ -25,6 +26,7 @@ import {
   OrderStatusFilter,
   NameSearchFilter,
 } from './tableControllers/Filters';
+import { OrderIdSorter, TransacTimeSorter } from './tableControllers/Sorters';
 
 const OrderTableArea = () => {
   const { pageNumber, selectedDate, orderStatus, searchingName } = useParams();
@@ -34,6 +36,26 @@ const OrderTableArea = () => {
     orderStatus,
     searchingName,
   );
+  const [sortByOrderId, setSortByOrderId] = useState<boolean>(false);
+  const [sortByTime, setSortByTime] = useState<boolean>(false);
+
+  const sortedDataByOrderId = [...data.order].sort((a, b) => {
+    if (sortByOrderId) return b.id - a.id;
+    else return a.id - b.id;
+  });
+
+  const sortedDataByTime = [...sortedDataByOrderId].sort((a, b) => {
+    if (sortByTime)
+      return (
+        new Date(b.transaction_time).getTime() -
+        new Date(a.transaction_time).getTime()
+      );
+    else
+      return (
+        new Date(a.transaction_time).getTime() -
+        new Date(b.transaction_time).getTime()
+      );
+  });
 
   return (
     <Box bg="white" w="100%" borderRadius="2xl" p="1em 2em">
@@ -60,14 +82,24 @@ const OrderTableArea = () => {
           </TableCaption>
           <Thead>
             <Tr>
-              <Th>sort</Th>
+              <Th>
+                <OrderIdSorter
+                  sortByOrderId={sortByOrderId}
+                  setSortByOrderId={setSortByOrderId}
+                />
+              </Th>
               <Th>
                 <OrderStatusFilter />
               </Th>
               <Th>
                 <NameSearchFilter />
               </Th>
-              <Th>sort</Th>
+              <Th>
+                <TransacTimeSorter
+                  sortByTime={sortByTime}
+                  setSortByTime={setSortByTime}
+                />
+              </Th>
             </Tr>
             <Tr>
               <Th>Order ID</Th>
@@ -78,7 +110,7 @@ const OrderTableArea = () => {
             </Tr>
           </Thead>
           <Tbody>
-            {data.order.map((orderItem: IOrderItem) => {
+            {sortedDataByTime.map((orderItem: IOrderItem) => {
               return (
                 <Tr key={orderItem.id}>
                   <Td>{orderItem.id}</Td>
