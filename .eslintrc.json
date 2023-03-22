@@ -3,7 +3,8 @@
   "env": {
     "browser": true,
     "es2021": true,
-    "node": true
+    "node": true,
+    "jest": true
   },
   "extends": [
     "eslint:recommended", //  eslint --init 명령으로 기본 생성 됨. 단, eslint --init 이후 typescript, react 사용함에 check 
