@@ -30,6 +30,7 @@ const StatsArea = () => {
 
   const stats = [
     {
+      testId: 'totalOrder',
       label: 'Total Order',
       stat: orderResult.data.orderInfo.totalCount,
       icon: IoIosPeople,
@@ -37,6 +38,7 @@ const StatsArea = () => {
       helpText: `${orderResult.data.orderInfo.startDate} - ${orderResult.data.orderInfo.endDate}`,
     },
     {
+      testId: 'totalCurrency',
       label: 'Total Currency',
       stat: formatNumToDollar(orderResult.data.orderInfo.totalCurrency),
       icon: TfiMoney,
@@ -44,6 +46,7 @@ const StatsArea = () => {
       helpText: `${orderResult.data.orderInfo.startDate} - ${orderResult.data.orderInfo.endDate}`,
     },
     {
+      testId: 'complete',
       label: 'Complete',
       stat: orderResult.data.order.filter((item: IOrderItem) => item.status)
         .length,
@@ -52,6 +55,7 @@ const StatsArea = () => {
       helpText: `of ${orderResult.data.order.length}`,
     },
     {
+      testId: 'incomplete',
       label: 'Incomplete',
       stat: orderResult.data.order.filter((item: IOrderItem) => !item.status)
         .length,
