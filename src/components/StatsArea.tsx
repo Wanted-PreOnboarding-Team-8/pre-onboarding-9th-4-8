@@ -67,7 +67,9 @@ const StatsArea = () => {
   return (
     <Box bg="white" w="100%" borderRadius="md" boxShadow="lg">
       <Box p="1em 2em">
-        <Heading size="md">Overview</Heading>
+        <Heading size="md" data-testid="overview">
+          Overview
+        </Heading>
       </Box>
       <StatGroup p="1.5em 1em">
         {stats.map((stat) => (

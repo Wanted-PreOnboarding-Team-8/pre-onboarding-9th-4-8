@@ -87,6 +87,7 @@ const TableController = () => {
 
             <MenuList>
               <MenuItem
+                data-testid={'status-complete'}
                 onClick={() => {
                   setParams('filter', 'complete');
                   deleteParams('page');
@@ -95,6 +96,7 @@ const TableController = () => {
                 Only Complete
               </MenuItem>
               <MenuItem
+                data-testid={'status-incomplete'}
                 onClick={() => {
                   setParams('filter', 'incomplete');
                   deleteParams('page');
@@ -115,6 +117,8 @@ const TableController = () => {
           </Tooltip>
           <Tooltip label="Initialize query">
             <IconButton
+              name={'reset-filter'}
+              data-testid={'reset-filter'}
               onClick={deleteAllParams}
               size="lg"
               aria-label="Initialize params"

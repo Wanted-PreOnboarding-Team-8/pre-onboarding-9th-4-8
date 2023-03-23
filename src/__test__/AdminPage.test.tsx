@@ -1,9 +1,10 @@
-import { render } from '@testing-library/react';
-import { Route } from 'react-router-dom';
-import { withRouter } from '@/__test__/utils';
+import { render, screen } from '@testing-library/react';
+import { WithRouter } from '@/__test__/utils';
 import AdminPage from '../pages/AdminPage';
-describe('Stats Area', () => {
-  it('render', () => {
-    render(withRouter(<Route path="/" element={<AdminPage />} />));
+
+describe('Admin Page Test', () => {
+  it('Admin 페이지 렌더 및 타이틀 표시', async () => {
+    await render(WithRouter(<AdminPage />));
+    expect(await screen.findByText('Overview')).toBeInTheDocument();
   });
 });
