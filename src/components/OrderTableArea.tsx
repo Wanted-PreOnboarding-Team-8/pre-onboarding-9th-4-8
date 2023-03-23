@@ -63,7 +63,7 @@ const OrderTableArea = () => {
               <Th>Currency</Th>
             </Tr>
           </Thead>
-          <Tbody>
+          <Tbody data-testid="table-body">
             {orderResult.data.order.map((orderItem: IOrderItem) => {
               return (
                 <Tr key={orderItem.id}>

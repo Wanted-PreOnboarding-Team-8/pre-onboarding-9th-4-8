@@ -35,6 +35,7 @@ const TableController = () => {
         minWidth="max-content"
         alignItems="flex-start"
         justifyContent="flex-start"
+        data-testid="table-controller"
       >
         <Stack gap={1}>
           <FormControl

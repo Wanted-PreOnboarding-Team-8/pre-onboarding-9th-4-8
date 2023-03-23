@@ -67,7 +67,7 @@ const StatsArea = () => {
       </Box>
       <StatGroup p="1.5em 1em">
         {stats.map((stat) => (
-          <Box key={stat.label}>
+          <Box key={stat.label} data-testid={stat.label}>
             <Flex alignItems="ceter" justifyContent="center" gap={4}>
               <Center>
                 <Icon

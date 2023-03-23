@@ -1,5 +1,5 @@
 module.exports = {
-  testPathIgnorePatterns: ["<rootDir>/node_modules/"],
+  testPathIgnorePatterns: ["<rootDir>/node_modules/", ".*/ignoreTest/.*"],
   transform: {
     "^.+\\.(js|jsx|ts|tsx)$": "ts-jest",
   },
