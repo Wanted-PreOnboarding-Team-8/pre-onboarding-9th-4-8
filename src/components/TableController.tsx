@@ -52,6 +52,7 @@ const TableController = () => {
             </FormLabel>
             <Switch
               id="today-order"
+              data-testid="today-order"
               onChange={(e) =>
                 e.target.checked
                   ? (setParams('date', TODAY), deleteParams('page'))
